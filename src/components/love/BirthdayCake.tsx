@@ -5,6 +5,7 @@ import { Atmosphere } from "./Atmosphere";
 import { birthdayCake } from "@/content/loveStory";
 import { canEnterStory, nextCakePhase, type CakePhase } from "@/lib/birthdayCake";
 import cakeImage from "@/assets/birthday-cake.png";
+import { playCelebration } from "@/lib/storySounds";
 
 export function BirthdayCake({ onEnter }: { onEnter: () => void }) {
   const [phase, setPhase] = useState<CakePhase>("lit");
@@ -20,7 +21,7 @@ export function BirthdayCake({ onEnter }: { onEnter: () => void }) {
   const enter = () => {
     if (!canEnterStory(phase) || leaving) return;
     setLeaving(true);
-    timer.current = setTimeout(onEnter, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 500);
+    onEnter();
   };
 
   return (
@@ -53,7 +54,7 @@ export function BirthdayCake({ onEnter }: { onEnter: () => void }) {
             {phase === "cut" ? <p className="romantic text-3xl text-gold-soft">{birthdayCake.message}</p> : phase === "blown" ? <p className="script text-2xl text-gold-soft">{birthdayCake.wish}</p> : <span className="font-display text-sm italic text-warm/60">One candle. A thousand wishes. All for you.</span>}
           </div>
           {phase === "lit" ? <Button onClick={blow} className="btn-love h-auto w-auto whitespace-normal px-6 py-4">{birthdayCake.blow}</Button> : <>
-            {phase === "blown" && <GoldenKnife onCut={() => setPhase((current) => nextCakePhase(current, "cut"))} label={birthdayCake.cut} />}
+            {phase === "blown" && <GoldenKnife onCut={() => { playCelebration(); setPhase((current) => nextCakePhase(current, "cut")); }} label={birthdayCake.cut} />}
             {phase === "cut" && <Button onClick={enter} disabled={leaving} className="btn-love h-auto w-auto whitespace-normal px-7 py-4">Turn Page ✨</Button>}
           </>}
         </div>
