@@ -20,6 +20,7 @@ import { ClosedCover } from "@/components/love/ClosedCover";
 import { Timeline } from "@/components/love/Timeline";
 import { Reasons } from "@/components/love/Reasons";
 import { Prologue } from "@/components/love/Prologue";
+import { GiftVault } from "@/components/love/GiftVault";
 import { LoveTimer } from "@/components/love/LoveTimer";
 import { DestinyNotebook } from "@/components/love/DestinyNotebook";
 
@@ -49,10 +50,10 @@ type Stage = "closed" | "cover" | "cake" | "avatar" | "scanner" | "names" | "not
 const CHAPTERS: { stage: Stage; label: string }[] = [
   { stage: "cover", label: "I · Our Story" },
   { stage: "cake", label: "II · Wish" },
-  { stage: "avatar", label: "III · Us" },
-  { stage: "scanner", label: "IV · Hearts" },
-  { stage: "names", label: "V · Names" },
-  { stage: "notebook", label: "VI · Destiny" },
+  { stage: "scanner", label: "III · Hearts" },
+  { stage: "names", label: "IV · Names" },
+  { stage: "notebook", label: "V · Destiny" },
+  { stage: "avatar", label: "VI · Us" },
   { stage: "prologue", label: "VII · For You" },
   { stage: "story", label: "VIII · Memories" },
 ];
@@ -75,7 +76,7 @@ function LoveStoryPage() {
     setTurning(reduced ? null : journal.chapters[CHAPTERS.findIndex((c) => c.stage === stage)] ?? journal.title);
   }, [stage]);
   const toNames = useCallback(() => setStage("names"), [setStage]);
-  useEffect(() => { void import("@/components/love/PageCurl"); }, []);
+  useEffect(() => { void import("@/components/love/PageCurl"); void import("@/components/love/avatar/HumanoidScene"); }, []);
   useEffect(() => {
     if (!turning) return;
     const failsafe = setTimeout(() => { setTurning(null); turnLock.current = false; }, 1450);
@@ -104,11 +105,11 @@ function LoveStoryPage() {
       <div key={stage} className={stage === "cover" ? "diary-page cover-reveal" : "diary-page"}>
       {stage === "closed" && <ClosedCover onOpen={() => setStageRaw("cover")} />}
       {stage === "cover" && <PasswordGate onUnlock={() => setStage("cake")} />}
-      {stage === "cake" && <BirthdayCake onEnter={() => setStage("avatar")} />}
-      {stage === "avatar" && <AvatarJourney onNext={() => setStage("scanner")} />}
+      {stage === "cake" && <BirthdayCake onEnter={() => setStage("scanner")} />}
+      {stage === "avatar" && <AvatarJourney onNext={() => setStage("prologue")} />}
       {stage === "scanner" && <LoveMeterScreen onContinue={toNames} />}
       {stage === "names" && <DestinyEntry onCalculate={(value) => { setNames(value); setStage("notebook"); }} />}
-      {stage === "notebook" && <DestinyNotebook names={names} onReveal={() => setStage("prologue")} />}
+      {stage === "notebook" && <DestinyNotebook names={names} onReveal={() => setStage("avatar")} />}
       {stage === "prologue" && <Prologue onEnter={() => setStage("story")} />}
 
       {stage === "story" && (
@@ -119,6 +120,7 @@ function LoveStoryPage() {
             <Timeline />
             <Reasons />
             <Gallery />
+            <GiftVault />
             <LoveLetter />
             <Finale />
             <SecretGateway />

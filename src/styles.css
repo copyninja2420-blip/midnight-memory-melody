@@ -1489,3 +1489,14 @@ body, .diary-book { background: var(--journal-velvet); }
 .love-timer-plaque { border-radius: 1rem; border: 1px solid #D4AF37; outline: 1px solid color-mix(in oklab, #D4AF37 40%, transparent); outline-offset: 5px; background: linear-gradient(160deg, color-mix(in oklab, #D4AF37 14%, #1A040A), #080104); box-shadow: 0 0 30px color-mix(in oklab, #D4AF37 22%, transparent); }
 .lock-medallion { display: flex !important; align-items: center; justify-content: center; overflow: visible; }
 .lock-medallion span { display: block; width: 100%; text-align: center; line-height: 1; padding: 0 .12em .1em 0; transform: translateX(-.04em); }
+.prologue-stage { background: radial-gradient(ellipse at center, #3a0716 0%, #1A040A 50%, #0D0205 100%); }
+.prologue-burst { position: absolute; left: 50%; top: 40%; width: 34rem; height: 34rem; transform: translate(-50%,-50%); z-index: -1; background: radial-gradient(circle, color-mix(in oklab, #D4AF37 30%, transparent), transparent 60%), repeating-conic-gradient(from 0deg, color-mix(in oklab, #D4AF37 12%, transparent) 0 2deg, transparent 2deg 14deg); mask: radial-gradient(circle, #000 15%, transparent 65%); animation: burst-spin 40s linear infinite; pointer-events: none; }
+@keyframes burst-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+.prologue-ornament { font-size: 2.6rem; color: #D4AF37; text-shadow: 0 0 18px color-mix(in oklab, #D4AF37 60%, transparent); margin-bottom: 1rem; }
+.gift-box { aspect-ratio: 1; border-radius: 1rem; border: 1px solid #D4AF37; background: linear-gradient(150deg, #7a1230, #2a0610); box-shadow: 0 8px 24px oklch(0 0 0 / 50%), inset 0 0 0 3px color-mix(in oklab, #D4AF37 30%, transparent); position: relative; overflow: hidden; transition: transform .5s; }
+.gift-box::before, .gift-box::after { content: ""; position: absolute; background: #D4AF37; transition: opacity .4s; }
+.gift-box::before { left: 45%; width: 10%; top: 0; bottom: 0; }
+.gift-box::after { top: 45%; height: 10%; left: 0; right: 0; }
+.gift-box.is-open { transform: rotateY(180deg); }
+.gift-box.is-open::before, .gift-box.is-open::after { opacity: 0; }
+.gift-box.is-open > * { transform: rotateY(180deg); }
