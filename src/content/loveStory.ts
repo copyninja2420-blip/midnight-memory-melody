@@ -24,7 +24,7 @@ export const journal = {
   title: "Our Love Journey",
   crest: "S",
   passcode: "1914",
-  chapters: ["Our Love Journey", "A Birthday Wish", "A Moment, Just Us", "The Love Scanner", "Our Destiny", "Written in the Stars", "Hey, My Love", "Little Pieces of Us"],
+  chapters: ["Our Love Journey", "A Birthday Wish", "The Love Scanner", "Our Destiny", "Written in the Stars", "A Moment, Just Us", "Hey, My Love", "Little Pieces of Us"],
   scanner: {
     eyebrow: "SOUL SYNCHRONIZATION",
     title: "The Love Scanner",

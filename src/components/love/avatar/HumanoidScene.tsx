@@ -147,6 +147,15 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
     s.moveTo(0, -0.5); s.bezierCurveTo(-1, 0.1, -0.7, 1, 0, 0.45); s.bezierCurveTo(0.7, 1, 1, 0.1, 0, -0.5);
     return s;
   }, []);
+  const petal = useMemo(() => {
+    const s = new THREE.Shape();
+    s.moveTo(0, -0.5); s.bezierCurveTo(0.55, -0.35, 0.6, 0.35, 0.12, 0.5); s.quadraticCurveTo(0, 0.42, -0.12, 0.5); s.bezierCurveTo(-0.6, 0.35, -0.55, -0.35, 0, -0.5);
+    const g = new THREE.ShapeGeometry(s, 12);
+    const pos = g.attributes.position;
+    for (let k = 0; k < pos.count; k++) { const x = pos.getX(k); pos.setZ(k, x * x * 0.9); }
+    g.computeVertexNormals();
+    return g;
+  }, []);
   useFrame((_, raw) => {
     time.current += Math.min(raw, 0.05);
     group.current?.children.forEach((mesh, i) => {
@@ -160,13 +169,13 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
       } else {
         mesh.position.set(Math.sin(i * 2.4) * t * 0.35 + Math.sin(t * 2) * 0.08, 1.75 + Math.cos(i * 1.7) * t * 0.22 - t * 0.12, 0.6 + t * 0.95);
         mesh.rotation.set(t, t * 0.6, i);
-        mesh.scale.set(0.065, 0.09, 0.04);
+        mesh.scale.set(0.11, 0.13, 0.11);
       }
     });
   });
   return <group ref={group}>{Array.from({ length: 14 }, (_, i) => <mesh key={`${action}-${i}`}>
-    {action === "kiss" ? <extrudeGeometry args={[shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }]} /> : <sphereGeometry args={[1, 10, 8]} />}
-    <meshStandardMaterial color={palette.rose} emissive={palette.rose} emissiveIntensity={1.3} roughness={0.35} />
+    {action === "kiss" ? <extrudeGeometry args={[shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }]} /> : <primitive object={petal} attach="geometry" />}
+    <meshStandardMaterial color={palette.rose} emissive={palette.rose} emissiveIntensity={action === "kiss" ? 1.3 : 0.35} roughness={0.55} side={THREE.DoubleSide} />
   </mesh>)}</group>;
 }
 
