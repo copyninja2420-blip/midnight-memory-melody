@@ -147,6 +147,8 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
     s.moveTo(0, -0.5); s.bezierCurveTo(-1, 0.1, -0.7, 1, 0, 0.45); s.bezierCurveTo(0.7, 1, 1, 0.1, 0, -0.5);
     return s;
   }, []);
+  const heart = useMemo(() => new THREE.ExtrudeGeometry(shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }), [shape]);
+  useEffect(() => () => heart.dispose(), [heart]);
   const petal = useMemo(() => {
     const s = new THREE.Shape();
     s.moveTo(0, -0.5); s.bezierCurveTo(0.55, -0.35, 0.6, 0.35, 0.12, 0.5); s.quadraticCurveTo(0, 0.42, -0.12, 0.5); s.bezierCurveTo(-0.6, 0.35, -0.55, -0.35, 0, -0.5);
@@ -173,8 +175,7 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
       }
     });
   });
-  return <group ref={group}>{Array.from({ length: 14 }, (_, i) => <mesh key={`${action}-${i}`} geometry={action === "kiss" ? undefined : petal}>
-    {action === "kiss" && <extrudeGeometry args={[shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }]} />}
+  return <group ref={group}>{Array.from({ length: 14 }, (_, i) => <mesh key={`${action}-${i}`} geometry={action === "kiss" ? heart : petal}>
     <meshStandardMaterial color={palette.rose} emissive={palette.rose} emissiveIntensity={action === "kiss" ? 1.3 : 0.35} roughness={0.55} side={THREE.DoubleSide} />
   </mesh>)}</group>;
 }
