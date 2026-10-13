@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 /** Standalone transitional page between the destiny reveal and the memory archive. */
 export function Prologue({ onEnter }: { onEnter: () => void }) {
@@ -16,9 +17,9 @@ export function Prologue({ onEnter }: { onEnter: () => void }) {
         <h1 id="prologue-title" className="romantic text-5xl leading-tight text-gold-soft sm:text-6xl">Hey, My Love... 🤍</h1>
         <p className="mt-6 font-display text-xl text-warm">I made something special for you.</p>
         <p className="mt-4 max-w-xs font-serif text-base leading-relaxed text-warm/75">Because you deserve more than just a birthday wish.</p>
-        <button type="button" disabled={leaving} onClick={() => { setLeaving(true); onEnter(); }} className="prologue-btn mt-12">
+        <Button type="button" disabled={leaving} onClick={() => { setLeaving(true); onEnter(); }} className="prologue-btn mt-12">
           ENTER OUR STORY ❤️
-        </button>
+        </Button>
         <p className="mt-14 text-[0.7rem] uppercase tracking-[0.4em] text-warm/45">Made only for you</p>
       </div>
     </section>

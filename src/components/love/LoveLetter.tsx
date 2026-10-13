@@ -6,6 +6,7 @@ import { SectionTitle } from "./SectionTitle";
 import { MoreSurprises } from "./MoreSurprises";
 import { Typewriter } from "./Typewriter";
 import { Button } from "@/components/ui/button";
+import { playPageTurn } from "@/lib/storySounds";
 
 type BurstHeart = { left: number; size: number; delay: number; duration: number };
 
@@ -17,6 +18,8 @@ export function LoveLetter() {
   const handleDone = useCallback(() => setTyped(true), []);
 
   const openLetter = () => {
+    if (open) return;
+    playPageTurn();
     setOpen(true);
     walkTo(0.14, "walk");
     window.setTimeout(() => {
@@ -61,7 +64,7 @@ export function LoveLetter() {
         <Button variant="ghost" aria-label={open ? "Love letter opened" : "Open wax-sealed love letter"} aria-expanded={open} onClick={() => { if (!open) openLetter(); }} className={`envelope envelope-interactive ${open ? "envelope-open" : ""}`}>
           <div className="envelope-flap" />
           <div className="envelope-body" />
-          <div className="envelope-seal">S</div>
+          <div className="envelope-seal"><span>S</span><i /><i /></div>
         </Button>
 
         {!open && (
