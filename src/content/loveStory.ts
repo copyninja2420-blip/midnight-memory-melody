@@ -24,7 +24,7 @@ export const journal = {
   title: "Our Love Journey",
   crest: "S",
   passcode: "1914",
-  chapters: ["Our Love Journey", "A Birthday Wish", "A Moment, Just Us", "The Love Scanner", "Our Destiny", "Written in the Stars", "Little Pieces of Us"],
+  chapters: ["Our Love Journey", "A Birthday Wish", "A Moment, Just Us", "The Love Scanner", "Our Destiny", "Written in the Stars", "Hey, My Love", "Little Pieces of Us"],
   scanner: {
     eyebrow: "SOUL SYNCHRONIZATION",
     title: "The Love Scanner",
@@ -112,13 +112,6 @@ export const story: StoryChapter[] = [
     body: "[ The moments that made a home out of us — write them here exactly as you remember them. ]",
     image: photoUs3.url,
   },
-  {
-    label: "OUR FUTURE",
-    date: "Today & always",
-    caption: "Every chapter after this one",
-    body: "[ Write about the life you dream of building with her. ]",
-    image: photoUs1.url,
-  },
 ];
 
 
@@ -178,7 +171,7 @@ export const extraSurprises: ExtraSurprise[] = [
   {
     kicker: "Heart shower",
     title: "All my love, all at once",
-    button: "Let it rain 💖",
+    button: "Let it rain ❤️",
     text: "Every heart falling on this screen is one thing I love about you — and I ran out of screen, not reasons. 💕",
     hearts: true,
   },

@@ -11,23 +11,22 @@ export function MoreSurprises() {
     setOpen((o) => (o.includes(i) ? o : [...o, i]));
     if (extraSurprises[i]?.hearts) {
       setRain(true);
-      window.setTimeout(() => setRain(false), 6000);
+      window.setTimeout(() => setRain(false), 14000);
     }
   };
 
   return (
     <div className="mx-auto mt-12 grid max-w-sm gap-4">
       {rain && (
-        <div className="pointer-events-none fixed inset-0 z-40 overflow-hidden" aria-hidden="true">
-          {Array.from({ length: 30 }, (_, i) => (
+        <div className="heart-shower" aria-hidden="true">
+          {Array.from({ length: 42 }, (_, i) => (
             <span
               key={i}
-              className="float-heart"
               style={{
-                left: `${(i * 17) % 100}%`,
+                left: `${(i * 23) % 100}%`,
                 fontSize: 14 + (i % 6) * 5,
-                animationDelay: `${(i % 10) * 0.22}s`,
-                animationDuration: `${3 + (i % 5) * 0.7}s`,
+                animationDelay: `${(i % 14) * 0.45}s`,
+                animationDuration: `${4.5 + (i % 5) * 0.8}s`,
               }}
             >
               {i % 3 === 0 ? "💖" : i % 3 === 1 ? "❤️" : "💗"}

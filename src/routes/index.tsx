@@ -19,6 +19,8 @@ import { DestinyEntry, type DestinyNames } from "@/components/love/DestinyEntry"
 import { ClosedCover } from "@/components/love/ClosedCover";
 import { Timeline } from "@/components/love/Timeline";
 import { Reasons } from "@/components/love/Reasons";
+import { Prologue } from "@/components/love/Prologue";
+import { LoveTimer } from "@/components/love/LoveTimer";
 import { DestinyNotebook } from "@/components/love/DestinyNotebook";
 
 const PageCurl = lazy(() => import("@/components/love/PageCurl"));
@@ -43,7 +45,7 @@ export const Route = createFileRoute("/")({
   component: LoveStoryPage,
 });
 
-type Stage = "closed" | "cover" | "cake" | "avatar" | "scanner" | "names" | "notebook" | "story";
+type Stage = "closed" | "cover" | "cake" | "avatar" | "scanner" | "names" | "notebook" | "prologue" | "story";
 const CHAPTERS: { stage: Stage; label: string }[] = [
   { stage: "cover", label: "I · Our Story" },
   { stage: "cake", label: "II · Wish" },
@@ -51,7 +53,8 @@ const CHAPTERS: { stage: Stage; label: string }[] = [
   { stage: "scanner", label: "IV · Hearts" },
   { stage: "names", label: "V · Names" },
   { stage: "notebook", label: "VI · Destiny" },
-  { stage: "story", label: "VII · Memories" },
+  { stage: "prologue", label: "VII · For You" },
+  { stage: "story", label: "VIII · Memories" },
 ];
 
 function LoveStoryPage() {
@@ -92,7 +95,7 @@ function LoveStoryPage() {
           const locked = i > reached || (c.stage === "notebook" && !names.yourName);
           return (
             <Button variant="ghost" key={c.stage} type="button" title={c.label} aria-label={c.label} disabled={locked || !!turning} aria-current={stage === c.stage ? "page" : undefined} onClick={() => setStage(c.stage)} className="diary-ribbon">
-              <span>{["I", "II", "III", "IV", "V", "VI", "VII"][i]}</span>
+              <span>{["I", "II", "III", "IV", "V", "VI", "VII", "VIII"][i]}</span>
             </Button>
           );
         })}
@@ -105,12 +108,14 @@ function LoveStoryPage() {
       {stage === "avatar" && <AvatarJourney onNext={() => setStage("scanner")} />}
       {stage === "scanner" && <LoveMeterScreen onContinue={toNames} />}
       {stage === "names" && <DestinyEntry onCalculate={(value) => { setNames(value); setStage("notebook"); }} />}
-      {stage === "notebook" && <DestinyNotebook names={names} onReveal={() => setStage("story")} />}
+      {stage === "notebook" && <DestinyNotebook names={names} onReveal={() => setStage("prologue")} />}
+      {stage === "prologue" && <Prologue onEnter={() => setStage("story")} />}
 
       {stage === "story" && (
         <div className="diary-memories">
           <HeartTap />
           <div className="relative z-10">
+            <LoveTimer />
             <Timeline />
             <Reasons />
             <Gallery />
