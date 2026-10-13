@@ -173,8 +173,8 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
       }
     });
   });
-  return <group ref={group}>{Array.from({ length: 14 }, (_, i) => <mesh key={`${action}-${i}`}>
-    {action === "kiss" ? <extrudeGeometry args={[shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }]} /> : <primitive object={petal} attach="geometry" />}
+  return <group ref={group}>{Array.from({ length: 14 }, (_, i) => <mesh key={`${action}-${i}`} geometry={action === "kiss" ? undefined : petal}>
+    {action === "kiss" && <extrudeGeometry args={[shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }]} />}
     <meshStandardMaterial color={palette.rose} emissive={palette.rose} emissiveIntensity={action === "kiss" ? 1.3 : 0.35} roughness={0.55} side={THREE.DoubleSide} />
   </mesh>)}</group>;
 }
