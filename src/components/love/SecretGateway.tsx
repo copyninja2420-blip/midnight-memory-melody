@@ -92,9 +92,9 @@ export function SecretGateway() {
             {!ready && <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-qr-ink"><LoaderCircle className="size-6 animate-spin" aria-label="Preparing QR code" /></div>}
           </div>
           <p className="mb-6 font-serif text-lg italic text-gold-soft/80">{keepsakeMessage}</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button className="btn-love h-auto min-h-12 px-6 py-3 tracking-normal" disabled={!ready || saving} onClick={download}>{saving ? <LoaderCircle className="animate-spin" /> : <Download />}{saving ? "Saving…" : "Download QR Card"}</Button>
-            <Button variant="outline" className="h-auto min-h-12 rounded-full border-gold-soft/30 bg-transparent px-6 py-3 text-gold-soft hover:bg-gold-soft/10 hover:text-gold-soft" onClick={copy}>{copied ? <Check /> : <Copy />}Copy Link</Button>
+          <div className="mx-auto flex w-full max-w-xs flex-col items-stretch gap-3 [&_svg]:shrink-0">
+            <Button className="btn-love h-auto min-h-12 w-full justify-center gap-2 px-6 py-3 tracking-normal" disabled={!ready || saving} onClick={download}>{saving ? <LoaderCircle className="animate-spin" /> : <Download />}{saving ? "Saving…" : "Download QR Card"}</Button>
+            <Button variant="outline" className="h-auto min-h-12 w-full justify-center gap-2 rounded-full border-gold-soft/30 bg-transparent px-6 py-3 text-gold-soft hover:bg-gold-soft/10 hover:text-gold-soft" onClick={copy}>{copied ? <Check /> : <Copy />}Copy Link</Button>
           </div>
           <div role="status" aria-live="polite" className="mt-4 min-h-10 text-sm text-rose-soft">{notice}</div>
         </div>
