@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Fingerprint } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { journal } from "@/content/loveStory";
+import { playCelebration } from "@/lib/storySounds";
+
+const CrystalHeart = lazy(() => import('./CrystalHeart'));
 
 const DURATION = 3200;
 
@@ -27,12 +30,14 @@ export function LoveMeterScreen({ onContinue }: { onContinue: () => void }) {
   const [progress, setProgress] = useState(0);
   const [holding, setHolding] = useState(false);
   const [done, setDone] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const frame = useRef<number | null>(null);
   const lastBeat = useRef(0);
 
-  useEffect(() => () => { if (frame.current) cancelAnimationFrame(frame.current); }, []);
+  useEffect(() => { setMounted(true); void import('./CrystalHeart'); return () => { if (frame.current) cancelAnimationFrame(frame.current); }; }, []);
   useEffect(() => {
     if (!done) return;
+    playCelebration();
     const t = setTimeout(onContinue, 3200);
     return () => clearTimeout(t);
   }, [done, onContinue]);
@@ -77,8 +82,9 @@ export function LoveMeterScreen({ onContinue }: { onContinue: () => void }) {
 
       <div className="scanner-heart-stage" aria-hidden="true">
         <span className="scanner-ring" /><span className="scanner-ring scanner-ring-2" />
-        <div className={`scanner-crystal ${holding ? "scanner-active" : ""}`}>♥</div>
+        <div className="scanner-ruby">{mounted && <Suspense fallback={<span className="scanner-crystal">♥</span>}><CrystalHeart progress={progress} active={holding} /></Suspense>}</div>
       </div>
+      <svg className={`scanner-ecg ${holding ? 'is-scanning' : ''}`} viewBox="0 0 360 50" aria-hidden="true"><path d="M0 25H60L72 18L84 25H115L130 39L144 3L159 46L171 25H225L240 18L253 25H360" pathLength="100" /></svg>
 
       <div className="relative z-10 flex flex-col items-center gap-4 text-center">
         <p className="font-display text-sm tracking-widest text-gold-soft" aria-live="polite">{status}</p>
