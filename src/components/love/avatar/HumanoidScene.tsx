@@ -198,4 +198,4 @@ export default function HumanoidScene({ action, burst, onTap }: { action: Action
     {action !== "idle" && <RomanticParticles action={action} burst={burst} palette={palette} />}
     <Sparkles count={35} scale={[4, 3.5, 2]} position={[0, 1.5, 0]} size={2} speed={0.25} color={palette.light} />
   </Canvas>;
-}
+}useGLTF.preload(modelAsset.url);
