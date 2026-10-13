@@ -18,3 +18,6 @@
 - Keep the classic FLAMES calculator separate from the romantic destiny calculator; this preserves classic behavior while allowing the requested celebratory outcome.
 - Use a locally hosted CC0 skinned humanoid for the birthday avatar and animate its bones; this avoids primitive stand-ins and third-party runtime dependencies.
 - Open on a closed velvet cover stage before the passcode page, kept outside the chapter ribbons; it is a prelude, not a chapter.
+- Keep story sound effects in an independent cached Web Audio context; this prevents page rustles from replacing or pausing the shared music element.
+- Portal viewport-wide heart showers to document.body; this avoids clipping and transformed containing blocks in chapter content.
+- Keep device-local voice moments separate from the music library and revoke replaced object URLs; this preserves user-owned tracks and releases media resources.

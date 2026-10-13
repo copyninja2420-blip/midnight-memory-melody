@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { extraSurprises } from "@/content/loveStory";
 import { Typewriter } from "./Typewriter";
 
@@ -18,8 +19,8 @@ export function MoreSurprises() {
   return (
     <div className="mx-auto mt-12 grid max-w-sm gap-4">
       {rain && (
-        <div className="heart-shower" aria-hidden="true">
-          {Array.from({ length: 42 }, (_, i) => (
+        createPortal(<div className="heart-shower" aria-hidden="true">
+          {Array.from({ length: 84 }, (_, i) => (
             <span
               key={i}
               style={{
@@ -29,10 +30,10 @@ export function MoreSurprises() {
                 animationDuration: `${4.5 + (i % 5) * 0.8}s`,
               }}
             >
-              {i % 3 === 0 ? "💖" : i % 3 === 1 ? "❤️" : "💗"}
+              {i % 5 === 0 ? "✦" : i % 3 === 0 ? "💖" : i % 3 === 1 ? "❤️" : "💗"}
             </span>
           ))}
-        </div>
+        </div>, document.body)
       )}
 
       {extraSurprises.map((s, i) => (

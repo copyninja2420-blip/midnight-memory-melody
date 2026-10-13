@@ -17,15 +17,13 @@ export function LoveTimer() {
     [total % 60, "Seconds"],
   ] as const;
   return (
-    <div className="love-timer-plaque mx-auto mb-14 mt-6 max-w-md px-5 py-6 text-center">
+    <div className="love-timer-plaque mx-auto mb-14 mt-6 max-w-lg px-5 py-8 text-center">
       <p className="script text-2xl text-gold-soft">Loving You For:</p>
-      <p className="mt-3 font-display text-lg text-warm" aria-live="off">
+      <div className="flip-clock mt-6" aria-live="off">
         {parts.map(([v, l], i) => (
-          <span key={l}>
-            <strong className="text-2xl text-gold-soft">{v}</strong> {l}{i < 3 ? ", " : ""}
-          </span>
+          <div key={l} className="flip-clock-unit"><div className="flip-clock-face"><strong key={v} className="flip-clock-number">{now === null ? "—" : String(v).padStart(2, "0")}</strong><i /></div><span>{l}</span>{i < 3 && <b className="flip-clock-colon" aria-hidden="true">:</b>}</div>
         ))}
-      </p>
+      </div>
     </div>
   );
 }

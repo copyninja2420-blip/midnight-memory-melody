@@ -7,7 +7,7 @@ function CurlSheet({ title }: { title: string }) {
   const mesh = useRef<THREE.Mesh>(null);
   const back = useRef<THREE.Mesh>(null);
   const elapsed = useRef(0);
-  const parchment = useMemo(() => getComputedStyle(document.documentElement).getPropertyValue("--warm").trim() || "#f3e6d0", []);
+  const parchment = useMemo(() => getComputedStyle(document.documentElement).getPropertyValue("--notebook-paper").trim(), []);
   const [texture, setTexture] = useState<THREE.CanvasTexture | null>(null);
   const geometry = useMemo(() => new THREE.PlaneGeometry(viewport.width, viewport.height, 80, 2), [viewport.width, viewport.height]);
   useEffect(() => {
@@ -17,13 +17,19 @@ function CurlSheet({ title }: { title: string }) {
     canvas.height = 1024;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    ctx.fillStyle = styles.getPropertyValue("--journal-wine").trim();
+    ctx.fillStyle = styles.getPropertyValue("--notebook-paper").trim();
     ctx.fillRect(0, 0, 768, 1024);
+    ctx.fillStyle = styles.getPropertyValue('--notebook-ink').trim();
+    for (let i = 0; i < 12000; i++) { ctx.globalAlpha = .015 + (i % 4) * .006; ctx.fillRect((i * 73) % 768, (i * 157) % 1024, 1, 1); }
+    ctx.globalAlpha = 1;
+    const shade = ctx.createLinearGradient(0, 0, 768, 0);
+    shade.addColorStop(0, styles.getPropertyValue('--journal-shadow').trim()); shade.addColorStop(.08, 'transparent'); shade.addColorStop(.9, 'transparent'); shade.addColorStop(1, styles.getPropertyValue('--journal-shadow').trim());
+    ctx.fillStyle = shade; ctx.fillRect(0, 0, 768, 1024);
     ctx.strokeStyle = styles.getPropertyValue("--journal-gold").trim();
     ctx.lineWidth = 2;
     ctx.strokeRect(22, 22, 724, 980);
     ctx.strokeRect(30, 30, 708, 964);
-    ctx.fillStyle = ctx.strokeStyle;
+    ctx.fillStyle = styles.getPropertyValue('--notebook-ink').trim();
     ctx.textAlign = "center";
     ctx.font = "italic 46px Georgia";
     const words = title.split(" ");
@@ -41,18 +47,19 @@ function CurlSheet({ title }: { title: string }) {
   useFrame((_, raw) => {
     elapsed.current += Math.min(raw, .05);
     const p = Math.min(elapsed.current / 1.15, 1);
-    const angle = p * Math.PI * .98;
+    const eased = p * p * (3 - 2 * p);
+    const angle = eased * Math.PI * .98;
     const positions = geometry.attributes['position'];
     if (!positions) return;
     const w = viewport.width;
     for (let i = 0; i < positions.count; i++) {
       const column = i % 81;
       const u = column / 80;
-      const bend = Math.sin(p * Math.PI) * .9;
+      const bend = Math.sin(p * Math.PI) * 1.15;
       const a = angle + u * bend;
       const distance = u * w;
       positions.setX(i, -w / 2 + Math.cos(a) * distance);
-      positions.setZ(i, Math.sin(a) * distance * .24 + Math.sin(u * Math.PI) * bend * w * .12);
+      positions.setZ(i, Math.sin(a) * distance * .38 + Math.sin(u * Math.PI) * bend * w * .16);
     }
     positions.needsUpdate = true;
     geometry.computeVertexNormals();
@@ -60,8 +67,8 @@ function CurlSheet({ title }: { title: string }) {
     [mesh.current?.material, back.current?.material].forEach((m) => { if (m instanceof THREE.MeshStandardMaterial) m.opacity = fade; });
   });
   return <>
-    <mesh ref={mesh} geometry={geometry}><meshStandardMaterial map={texture} side={THREE.FrontSide} roughness={.6} metalness={.15} transparent /></mesh>
-    <mesh ref={back} geometry={geometry}><meshStandardMaterial color={parchment} side={THREE.BackSide} roughness={.9} transparent /></mesh>
+    <mesh ref={mesh} geometry={geometry} dispose={null}><meshStandardMaterial map={texture} side={THREE.FrontSide} roughness={.88} metalness={0} transparent /></mesh>
+    <mesh ref={back} geometry={geometry} dispose={null}><meshStandardMaterial map={texture} color={parchment} side={THREE.BackSide} roughness={.95} transparent /></mesh>
   </>;
 }
 

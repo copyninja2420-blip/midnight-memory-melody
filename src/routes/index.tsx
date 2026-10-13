@@ -23,6 +23,8 @@ import { Prologue } from "@/components/love/Prologue";
 import { GiftVault } from "@/components/love/GiftVault";
 import { LoveTimer } from "@/components/love/LoveTimer";
 import { DestinyNotebook } from "@/components/love/DestinyNotebook";
+import { playPageTurn, preloadStorySounds } from "@/lib/storySounds";
+import { RomanticKeepsakes } from "@/components/love/RomanticKeepsakes";
 
 const PageCurl = lazy(() => import("@/components/love/PageCurl"));
 
@@ -69,6 +71,7 @@ function LoveStoryPage() {
     if (turnLock.current || next === stage) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     turnLock.current = true;
+    playPageTurn();
     const i = CHAPTERS.findIndex((c) => c.stage === next);
     setReached((r) => Math.max(r, i));
     timers.current.push(setTimeout(() => setStageRaw(next), reduced ? 0 : 420));
@@ -76,7 +79,7 @@ function LoveStoryPage() {
     setTurning(reduced ? null : journal.chapters[CHAPTERS.findIndex((c) => c.stage === stage)] ?? journal.title);
   }, [stage]);
   const toNames = useCallback(() => setStage("names"), [setStage]);
-  useEffect(() => { void import("@/components/love/PageCurl"); void import("@/components/love/avatar/HumanoidScene"); }, []);
+  useEffect(() => { preloadStorySounds(); void import("@/components/love/PageCurl"); void import("@/components/love/avatar/HumanoidScene"); return () => timers.current.forEach(clearTimeout); }, []);
   useEffect(() => {
     if (!turning) return;
     const failsafe = setTimeout(() => { setTurning(null); turnLock.current = false; }, 1450);
@@ -121,6 +124,7 @@ function LoveStoryPage() {
             <Reasons />
             <Gallery />
             <GiftVault />
+            <RomanticKeepsakes />
             <LoveLetter />
             <Finale />
             <SecretGateway />

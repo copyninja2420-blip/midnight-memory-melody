@@ -68,7 +68,7 @@ export function DestinyNotebook({ names, onReveal }: { names: DestinyNames; onRe
                 const visible = written > index + (side === 1 ? result.a.length : 0);
                 const crossed = isStruck(side as 0 | 1, index);
                 const lastStrike = result.strikes[struck - 1];
-                return <span key={index} className={`pencil-letter handwriting-letter ${visible ? "letter-written" : ""} ${crossed ? "pencil-crossed" : ""}`}>{letter.toLowerCase()}<i aria-hidden="true" />{lastStrike?.[side] === index && <span className="graphite-pencil" aria-hidden="true">✎</span>}</span>;
+                return <span key={index} className={`pencil-letter handwriting-letter ${visible ? "letter-written" : ""} ${crossed ? "pencil-crossed" : ""}`}>{index === 0 ? letter.toUpperCase() : letter.toLowerCase()}<i aria-hidden="true" />{lastStrike?.[side] === index && <span className="graphite-pencil" aria-hidden="true"><b /></span>}</span>;
               })}
             </div>
           ))}

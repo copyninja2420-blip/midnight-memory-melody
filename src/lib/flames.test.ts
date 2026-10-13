@@ -26,3 +26,8 @@ test("romantic notebook always ends in M (Marriage), independent of names", () =
     assert.deepEqual(result.strikes, calculateFlames(a, b).strikes);
   }
 });
+
+test("Sriharan and Nanthini's romantic destiny is Marriage", () => {
+  assert.equal(calculateRomanticDestiny("Sriharan", "Nanthini").destiny, "M");
+  assert.equal(calculateRomanticDestiny("Sriharan", "Nanthini").remaining, 8);
+});

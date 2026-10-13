@@ -1,5 +1,10 @@
 # Roadmap
 
+- [ ] Upgrade closed leather book, centered emblem and double-sided chapter turns with uploaded sound.
+- [ ] Upgrade ruby scanner, pencil destiny animation and avatar pose/petals/expressions.
+- [ ] Upgrade prologue, flip timer, gifts, constellation, letter, voice moment and keepsake footer.
+- [ ] Verify complete journey, audio, interactions and desktop/mobile rendering.
+
 - [x] Complete cover → cake → avatar → scanner → names → destiny → Polaroids/letter experience with continuous audio.
 - [x] Add wine/gold filigree, curved 3D page turns, improved cake slicing and notebook handwriting.
 - [x] Improve photo-inspired avatar rig and verify all seven chapters, music uploads and mobile/desktop layout; likeness and shirt silhouette remain approximate.
