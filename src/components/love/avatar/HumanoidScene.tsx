@@ -151,7 +151,7 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
     const s = new THREE.Shape();
     s.moveTo(0, -0.5); s.bezierCurveTo(0.55, -0.35, 0.6, 0.35, 0.12, 0.5); s.quadraticCurveTo(0, 0.42, -0.12, 0.5); s.bezierCurveTo(-0.6, 0.35, -0.55, -0.35, 0, -0.5);
     const g = new THREE.ShapeGeometry(s, 12);
-    const pos = g.attributes.position;
+    const pos = g.getAttribute("position");
     for (let k = 0; k < pos.count; k++) { const x = pos.getX(k); pos.setZ(k, x * x * 0.9); }
     g.computeVertexNormals();
     return g;
