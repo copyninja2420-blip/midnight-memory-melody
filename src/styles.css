@@ -1475,3 +1475,17 @@ body, .diary-book { background: var(--journal-velvet); }
 .atmosphere .firefly:nth-of-type(3n) { background: var(--warm); box-shadow: 0 0 8px 2px color-mix(in oklab, var(--gold-soft) 70%, transparent); }
 .atmosphere .float-heart:nth-of-type(odd) { color: var(--rose-glow); }
 @media (prefers-reduced-motion: reduce) { .closed-cover { transition: none; } .wax-seal { animation: none; } }
+
+/* Prologue, heart shower, timer plaque, medallion centering */
+.prologue-stage { position: relative; min-height: 100svh; overflow: hidden; background: radial-gradient(ellipse at center, #4a0b1c 0%, #1A040A 55%, #080104 100%); }
+.prologue-bokeh span { position: absolute; border-radius: 50%; background: radial-gradient(circle, color-mix(in oklab, #D4AF37 70%, transparent), transparent 70%); filter: blur(2px); opacity: .5; animation: prologue-twinkle 4s ease-in-out infinite; }
+@keyframes prologue-twinkle { 0%,100% { opacity: .15; transform: scale(.8); } 50% { opacity: .7; transform: scale(1.15); } }
+.prologue-btn { border-radius: 9999px; background: #A0153E; color: #fff5e8; padding: 1rem 2.2rem; font-family: var(--font-display, serif); letter-spacing: .18em; font-size: .9rem; border: 1px solid color-mix(in oklab, #D4AF37 60%, transparent); box-shadow: 0 0 24px #A0153E, 0 0 60px color-mix(in oklab, #A0153E 50%, transparent); animation: prologue-glow 2.4s ease-in-out infinite; transition: transform .2s; }
+.prologue-btn:hover { transform: scale(1.04); }
+@keyframes prologue-glow { 50% { box-shadow: 0 0 36px #A0153E, 0 0 90px color-mix(in oklab, #D4AF37 35%, transparent); } }
+.heart-shower { position: fixed; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
+.heart-shower span { position: absolute; top: -12vh; animation-name: heart-fall; animation-timing-function: linear; animation-iteration-count: infinite; filter: drop-shadow(0 0 8px oklch(0.7 0.16 12 / 50%)); }
+@keyframes heart-fall { 0% { transform: translate3d(0,0,0) rotate(0); opacity: 0; } 8% { opacity: 1; } 50% { transform: translate3d(18px,60vh,0) rotate(20deg); } 100% { transform: translate3d(-14px,128vh,0) rotate(-15deg); opacity: .9; } }
+.love-timer-plaque { border-radius: 1rem; border: 1px solid #D4AF37; outline: 1px solid color-mix(in oklab, #D4AF37 40%, transparent); outline-offset: 5px; background: linear-gradient(160deg, color-mix(in oklab, #D4AF37 14%, #1A040A), #080104); box-shadow: 0 0 30px color-mix(in oklab, #D4AF37 22%, transparent); }
+.lock-medallion { display: flex !important; align-items: center; justify-content: center; overflow: visible; }
+.lock-medallion span { display: block; width: 100%; text-align: center; line-height: 1; padding: 0 .12em .1em 0; transform: translateX(-.04em); }
