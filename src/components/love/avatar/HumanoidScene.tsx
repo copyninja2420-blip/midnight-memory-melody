@@ -4,6 +4,7 @@ import { ContactShadows, Environment, Html, Lightformer, Sparkles, useGLTF } fro
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import * as THREE from "three";
 import modelAsset from "@/assets/photo-inspired-humanoid-v2.glb.asset.json";
+import { curvedPetal, petalTexture } from './roseMaterials';
 
 type Action = "idle" | "rose" | "kiss";
 type Palette = { wine: string; light: string; rose: string; leaf: string };
@@ -77,7 +78,7 @@ function Character({ action, burst, onTap, palette }: { action: Action; burst: n
       entry.bone.updateWorldMatrix(false, false);
     };
     const breathe = Math.sin(t * 1.7) * 0.03;
-    const kp = phase.current % 4;
+    const kp = phase.current;
     // Default: standing, both hands cradle the rose in front of the chest.
     const chestL = () => { aim("LeftArm", "LeftForeArm", dir(0.16 + breathe, 0.38, -0.9)); aim("LeftForeArm", "LeftHand", dir(-0.6, 0.72, 0.38)); };
     const chestR = () => { aim("RightArm", "RightForeArm", dir(-0.16 - breathe, 0.38, -0.9)); aim("RightForeArm", "RightHand", dir(0.6, 0.72, 0.38)); };
@@ -95,12 +96,12 @@ function Character({ action, burst, onTap, palette }: { action: Action; burst: n
     // Subtle eye blinks when the model exposes blink shapes.
     const blink = (t % 3.8) < 0.13 ? 1 : 0;
     blinkMeshes.forEach(({ mesh, idx }) => { if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[idx] = THREE.MathUtils.damp(mesh.morphTargetInfluences[idx] ?? 0, blink, 30, dt); });
-    // Head gently follows the viewer's pointer for natural eye contact.
+    // Keep the face oriented toward the viewer; pointer motion must not break eye contact.
     const head = bones.get("Head");
     if (head?.bone.parent) {
       head.bone.parent.getWorldQuaternion(scratch.pw);
-      scratch.r.setFromAxisAngle(basis.up, state.pointer.x * 0.35 + Math.sin(t * 0.5) * 0.04)
-        .multiply(new THREE.Quaternion().setFromAxisAngle(basis.side, -state.pointer.y * 0.18 + 0.06 * Math.sin(t * 0.3) + Math.sin(t * 0.7) * 0.02));
+      scratch.r.setFromAxisAngle(basis.up, Math.sin(t * .5) * .015)
+        .multiply(new THREE.Quaternion().setFromAxisAngle(basis.side, Math.sin(t * .7) * .012));
       const localOffset = scratch.pw.clone().invert().multiply(scratch.r).multiply(scratch.pw);
       head.bone.quaternion.slerp(localOffset.multiply(head.rest), 1 - Math.exp(-4 * dt));
     }
@@ -109,7 +110,7 @@ function Character({ action, burst, onTap, palette }: { action: Action; burst: n
     if (body.current) {
       const height = Math.sin(t * 1.7) * 0.012;
       body.current.position.y = THREE.MathUtils.damp(body.current.position.y, height, 5, dt);
-      body.current.rotation.y = Math.sin(t * 0.65) * 0.025;
+      body.current.rotation.y = Math.sin(t * 0.65) * 0.008;
     }
     if (rose.current) {
       const right = bones.get("RightHand")?.bone;
@@ -124,17 +125,20 @@ function Character({ action, burst, onTap, palette }: { action: Action; burst: n
     }
   });
   return <>
-    <group ref={body} scale={2.8 / 1.8} onClick={(event) => { event.stopPropagation(); onTap(); }}><primitive object={character} /></group>
+    <group ref={body} scale={2.8 / 1.8} onClick={(event) => { event.stopPropagation(); onTap(); }}><primitive object={character} dispose={null} /></group>
     <group ref={rose} scale={0.5}><Rose palette={palette} /></group>
   </>;
 }
 
 function Rose({ palette }: { palette: Palette }) {
+  const petal = useMemo(curvedPetal, []);
+  const texture = useMemo(() => petalTexture(palette.rose), [palette.rose]);
+  useEffect(() => () => { petal.dispose(); texture.dispose(); }, [petal, texture]);
   return <group>
     <mesh position-y={-0.2}><cylinderGeometry args={[0.012, 0.014, 0.6, 8]} /><meshStandardMaterial color={palette.leaf} /></mesh>
     <mesh position={[0.07, -0.2, 0]} rotation-z={-0.8} scale={[1, 0.4, 0.2]}><sphereGeometry args={[0.1, 12, 8]} /><meshStandardMaterial color={palette.leaf} /></mesh>
-    {Array.from({ length: 15 }, (_, i) => <mesh key={i} position={[Math.cos(i * 2.4) * (0.03 + i * 0.004), 0.1 - i * 0.003, Math.sin(i * 2.4) * (0.03 + i * 0.004)]} rotation={[i * 0.04, i * 2.4, 0.2]} scale={[1, 1.2, 0.35]}><sphereGeometry args={[0.085, 16, 12]} /><meshStandardMaterial color={palette.rose} emissive={palette.rose} emissiveIntensity={1.1} roughness={0.4} /></mesh>)}
-    <pointLight position-y={0.15} color={palette.rose} intensity={1.6} distance={1.5} />
+    {Array.from({ length: 22 }, (_, i) => { const angle = i * 2.4; const radius = .025 + i * .004; return <mesh key={i} geometry={petal} dispose={null} position={[Math.cos(angle) * radius, .1 - i * .002, Math.sin(angle) * radius]} rotation={[.25 + i * .025, angle, .15]} scale={[.14 + i * .003, .19, .16]}><meshStandardMaterial map={texture} emissive={palette.rose} emissiveIntensity={.12} roughness={.62} side={THREE.DoubleSide} /></mesh>; })}
+    <pointLight position-y={0.15} color={palette.rose} intensity={.25} distance={1.5} />
   </group>;
 }
 
@@ -149,15 +153,9 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
   }, []);
   const heart = useMemo(() => new THREE.ExtrudeGeometry(shape, { depth: 0.2, bevelEnabled: true, bevelSize: 0.08, bevelThickness: 0.08, bevelSegments: 2, steps: 1 }), [shape]);
   useEffect(() => () => heart.dispose(), [heart]);
-  const petal = useMemo(() => {
-    const s = new THREE.Shape();
-    s.moveTo(0, -0.5); s.bezierCurveTo(0.55, -0.35, 0.6, 0.35, 0.12, 0.5); s.quadraticCurveTo(0, 0.42, -0.12, 0.5); s.bezierCurveTo(-0.6, 0.35, -0.55, -0.35, 0, -0.5);
-    const g = new THREE.ShapeGeometry(s, 12);
-    const pos = g.getAttribute("position");
-    for (let k = 0; k < pos.count; k++) { const x = pos.getX(k); pos.setZ(k, x * x * 0.9); }
-    g.computeVertexNormals();
-    return g;
-  }, []);
+  const petal = useMemo(curvedPetal, []);
+  const texture = useMemo(() => petalTexture(palette.rose), [palette.rose]);
+  useEffect(() => () => { petal.dispose(); texture.dispose(); }, [petal, texture]);
   useFrame((_, raw) => {
     time.current += Math.min(raw, 0.05);
     group.current?.children.forEach((mesh, i) => {
@@ -169,14 +167,14 @@ function RomanticParticles({ action, burst, palette }: { action: Action; burst: 
         mesh.scale.setScalar(0.08 + flight * 0.03);
         mesh.rotation.set(0, Math.sin(t) * 0.4, Math.sin(i) * 0.2);
       } else {
-        mesh.position.set(Math.sin(i * 2.4) * t * 0.35 + Math.sin(t * 2) * 0.08, 1.75 + Math.cos(i * 1.7) * t * 0.22 - t * 0.12, 0.6 + t * 0.95);
-        mesh.rotation.set(t, t * 0.6, i);
+        mesh.position.set(Math.sin(i * 2.4) * t * .35 + Math.sin(t * 2.3 + i) * .13 * t, 1.75 + Math.cos(i * 1.7) * t * .22 - .035 * t * t + Math.sin(t * 3 + i) * .04, .6 + t * .95);
+        mesh.rotation.set(t * .7 + Math.sin(t * 4 + i) * .3, t * .6, i + Math.sin(t * 2 + i) * .45);
         mesh.scale.set(0.11, 0.13, 0.11);
       }
     });
   });
-  return <group ref={group}>{Array.from({ length: 14 }, (_, i) => <mesh key={`${action}-${i}`} geometry={action === "kiss" ? heart : petal}>
-    <meshStandardMaterial color={palette.rose} emissive={palette.rose} emissiveIntensity={action === "kiss" ? 1.3 : 0.35} roughness={0.55} side={THREE.DoubleSide} />
+  return <group ref={group}>{Array.from({ length: 18 }, (_, i) => <mesh key={i} geometry={action === "kiss" ? heart : petal} dispose={null}>
+    <meshStandardMaterial map={action === 'rose' ? texture : null} color={action === 'rose' ? palette.light : palette.rose} emissive={palette.rose} emissiveIntensity={action === "kiss" ? 1.3 : .08} roughness={0.65} side={THREE.DoubleSide} />
   </mesh>)}</group>;
 }
 
