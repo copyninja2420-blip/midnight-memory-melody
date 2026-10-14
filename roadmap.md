@@ -1,9 +1,10 @@
 # Roadmap
 
-- [ ] Upgrade closed leather book, centered emblem and double-sided chapter turns with uploaded sound.
-- [ ] Upgrade ruby scanner, pencil destiny animation and avatar pose/petals/expressions.
-- [ ] Upgrade prologue, flip timer, gifts, constellation, letter, voice moment and keepsake footer.
-- [ ] Verify complete journey, audio, interactions and desktop/mobile rendering.
+- [x] Upgrade closed leather book, centered emblem and double-sided chapter turns with uploaded sound.
+- [x] Upgrade ruby scanner, pencil destiny animation, forward-facing avatar, textured rose/petals and kiss gesture.
+- [ ] Realistic avatar blinking and facial smile animation — blocked: current model has no facial bones or morph targets; requires a facially rigged replacement model.
+- [x] Upgrade prologue, flip timer, gifts, constellation, letter, device-local voice moment and keepsake footer.
+- [x] Verify complete journey, rose/kiss buttons, gifts, constellation, voice playback, QR download and desktop/mobile rendering. Music retained the same element and played through the journey; initial-load events were observed, so zero reloads is not conclusively verified.
 
 - [x] Complete cover → cake → avatar → scanner → names → destiny → Polaroids/letter experience with continuous audio.
 - [x] Add wine/gold filigree, curved 3D page turns, improved cake slicing and notebook handwriting.
