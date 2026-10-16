@@ -46,7 +46,7 @@ export function BirthdayCake({ onEnter }: { onEnter: () => void }) {
             <span className="birthday-candle-body" />
             {phase === "lit" ? <Button variant="ghost" aria-label="Blow out candle flame" onClick={blow} className="birthday-flame-target"><span className="birthday-flame" /></Button> : <><span className="birthday-smoke" aria-hidden="true"><i /><i /><i /></span><span className="birthday-sparks" aria-hidden="true">{Array.from({ length: 10 }, (_, i) => <i key={i} style={{ "--spark-angle": `${i * 36}deg` } as React.CSSProperties} />)}</span></>}
           </div>
-          {phase === "cut" && <><div className="birthday-cut-mark" aria-hidden="true" /><div className="cake-slice-gap" aria-hidden="true" /></>}
+          {phase === "cut" && <><div className="birthday-cut-mark" aria-hidden="true" /><div className="cake-slice-gap" aria-hidden="true" />{Array.from({ length: 10 }, (_, i) => <span key={i} className="cake-crumb" aria-hidden="true" style={{ top: `${30 + i * 5}%`, animationDelay: `${0.25 + i * 0.08}s`, "--crumb-x": `${(i % 2 ? 1 : -1) * (6 + i * 3)}px` } as React.CSSProperties} />)}</>}
         </div>
 
         <div className="birthday-cake-actions">

@@ -11,7 +11,6 @@ import { HeartTap } from "@/components/love/HeartTap";
 import { LoveLetter } from "@/components/love/LoveLetter";
 import { MusicToggle } from "@/components/love/MusicToggle";
 import { BirthdayCake } from "@/components/love/BirthdayCake";
-import { ShareButton } from "@/components/love/ShareButton";
 import { SecretGateway } from "@/components/love/SecretGateway";
 import { WhatsAppReaction } from "@/components/love/WhatsAppReaction";
 import { AvatarJourney } from "@/components/love/AvatarJourney";
@@ -129,7 +128,6 @@ function LoveStoryPage() {
             <Finale />
             <SecretGateway />
             <WhatsAppReaction />
-            <ShareButton />
           </div>
         </div>
       )}

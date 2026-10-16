@@ -4,9 +4,25 @@ let context: AudioContext | undefined;
 let bytes: Promise<ArrayBuffer> | undefined;
 let buffer: AudioBuffer | undefined;
 let decoding: Promise<AudioBuffer> | undefined;
+let unlockBound = false;
 export function preloadStorySounds() {
   bytes ??= fetch(pageSound.url).then(r => { if (!r.ok) throw new Error('Sound unavailable'); return r.arrayBuffer(); });
   void bytes.catch(() => { bytes = undefined; });
+  if (typeof window !== 'undefined' && !unlockBound) {
+    unlockBound = true;
+    // Decode on the first tap so every later turn plays instantly from memory.
+    const unlock = () => {
+      try {
+        const ctx = audioContext();
+        if (!buffer && bytes) {
+          decoding ??= bytes.then(data => ctx.decodeAudioData(data.slice(0)));
+          void decoding.then(sound => { buffer = sound; }).catch(() => { decoding = undefined; });
+        }
+      } catch { /* optional */ }
+    };
+    window.addEventListener('pointerdown', unlock, { once: true, capture: true });
+    window.addEventListener('keydown', unlock, { once: true, capture: true });
+  }
 }
 function audioContext() {
   context ??= new AudioContext();

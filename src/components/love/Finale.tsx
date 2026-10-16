@@ -42,19 +42,15 @@ export function Finale() {
           </button>
         ) : (
           <>
-            <p className="mt-8 font-display text-[1.55rem] leading-snug tracking-wide text-warm text-glow">
-              <Typewriter text={finale.answer} speed={30} onDone={handleDone} />
-            </p>
-
-            <div className="mt-8 space-y-2">
-              {finale.beats.slice(0, beat).map((b) => (
-                <p
-                  key={b}
-                  className="animate-rise font-serif text-[1.05rem] tracking-[0.12em] text-warm/80"
-                >
-                  {b}
-                </p>
-              ))}
+            <div className="relative mt-8">
+              <div className="answer-glow" aria-hidden="true" />
+              {Array.from({ length: 14 }, (_, i) => <span key={i} className="stardust" aria-hidden="true" style={{ left: `${(i * 29) % 100}%`, top: `${(i * 41) % 100}%`, animationDelay: `${(i % 7) * 0.6}s` }} />)}
+              <p className="foil-line relative font-display text-[1.55rem] leading-snug tracking-wide" onAnimationEnd={handleDone}>{finale.answer}</p>
+              <div className="relative mt-6 space-y-2">
+                {finale.beats.slice(0, beat).map((b) => (
+                  <p key={b} className="foil-line font-serif text-[1.1rem] tracking-[0.12em]">{b}</p>
+                ))}
+              </div>
             </div>
 
             {beat >= finale.beats.length && (

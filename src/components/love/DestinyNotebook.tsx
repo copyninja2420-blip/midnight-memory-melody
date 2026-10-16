@@ -57,7 +57,6 @@ export function DestinyNotebook({ names, onReveal }: { names: DestinyNames; onRe
   return (
     <section className="destiny-notebook journey-screen" aria-labelledby="notebook-title">
       <img src={paper} alt="" aria-hidden="true" className="notebook-texture" width={1024} height={1536} />
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&display=swap" precedence="default" />
       <div className="notebook-content relative z-10 mx-auto w-full max-w-2xl text-center">
         <p className="notebook-eyebrow">a little page from our forever</p>
         <h1 id="notebook-title" className="mb-10 text-4xl sm:text-5xl">F • L • A • M • E • S</h1>
