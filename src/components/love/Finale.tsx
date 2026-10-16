@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { couple, finale, secret } from "@/content/loveStory";
 import { useReveal } from "@/hooks/useReveal";
 import { say, setMood, walkTo } from "@/lib/companion";
-import { Typewriter } from "./Typewriter";
 
 export function Finale() {
   const { ref, shown } = useReveal(0.4);
