@@ -1324,7 +1324,6 @@
 .scanner-heart-stage { position: relative; width: 14rem; height: 14rem; display: grid; place-items: center; }
 .scanner-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px dashed color-mix(in oklab, var(--gold-soft) 55%, transparent); animation: scanner-spin 9s linear infinite; }
 .scanner-ring-2 { inset: 1.4rem; animation-direction: reverse; animation-duration: 5s; border-style: dotted; }
-.scanner-crystal { width: 8rem; height: 8rem; display: grid; place-items: center; font-size: 4rem; color: var(--rose-glow); border-radius: 50%; border: 1px solid var(--gold-soft); background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--warm) 35%, transparent), transparent 45%), color-mix(in oklab, var(--burgundy-deep) 80%, transparent); box-shadow: 0 0 calc(20px + var(--scan-glow) * 70px) color-mix(in oklab, var(--rose-glow) 70%, transparent); animation: scanner-beat var(--beat-speed) ease-in-out infinite; }
 .scanner-pad { position: relative; width: 7rem; height: 7rem; border-radius: 50%; display: grid; place-items: center; color: var(--gold-soft); border: 1px solid var(--gold-soft); background: color-mix(in oklab, var(--burgundy-deep) 75%, transparent); box-shadow: 0 0 24px color-mix(in oklab, var(--gold-soft) 35%, transparent); touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 .scanner-pad-active { transform: scale(.96); box-shadow: 0 0 50px color-mix(in oklab, var(--gold-soft) 70%, transparent); }
 .scanner-progress { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); transform: rotate(-90deg); }
@@ -1337,7 +1336,7 @@
 @keyframes scanner-beat { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.12); } 40% { transform: scale(1.02); } 55% { transform: scale(1.08); } }
 @keyframes scanner-ripple { from { transform: scale(1); opacity: .8; } to { transform: scale(2.4); opacity: 0; } }
 @keyframes scanner-star { from { transform: rotate(var(--burst-angle)) translateY(0) scale(.4); opacity: 1; } to { transform: rotate(var(--burst-angle)) translateY(calc(var(--burst-distance) * -1)) scale(1.4); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .diary-page, .scanner-crystal, .scanner-ring, .scanner-ripple, .scanner-burst i { animation: none; } .gate-cover { transition: opacity .3s; } }
+@media (prefers-reduced-motion: reduce) { .diary-page, .scanner-ring, .scanner-ripple, .scanner-burst i { animation: none; } .gate-cover { transition: opacity .3s; } }
 
 /* Seven-page velvet journal */
 :root {
@@ -1382,7 +1381,7 @@ body, .diary-book { background: var(--journal-velvet); }
 .cover-footer { margin-top: 2rem; }
 .cover-spine { position: absolute; top: 0; left: 1.1rem; bottom: 0; width: .6rem; border-right: 1px solid color-mix(in oklab, var(--gold-soft) 20%, transparent); background: linear-gradient(90deg, transparent, var(--journal-shadow), transparent); }
 .journey-pill { min-width: 16rem; max-width: calc(100vw - 5rem); padding: .4rem .8rem .6rem; background: color-mix(in oklab, var(--journal-deep) 94%, transparent); border-color: color-mix(in oklab, var(--gold-soft) 40%, transparent); backdrop-filter: blur(16px); }
-.music-library { position: absolute; top: calc(100% + 2.8rem); left: 0; right: 0; padding: .6rem; border: 1px solid var(--gold-soft); border-radius: 6px; background: var(--journal-deep); }
+.music-library-dialog { z-index: 110; width: min(90vw, 28rem); border-radius: 6px; }
 .diary-book:has(.journey-pill[data-manage="true"]) .diary-ribbons { top: 5.8rem; }
 .diary-book:has(.journey-pill[data-manage="true"]) .journey-screen, .diary-book:has(.journey-pill[data-manage="true"]) .avatar-journey { padding-top: 9rem; }
 .diary-book[data-journey="notebook"] .diary-ribbons { background: var(--journal-deep); padding: .2rem .4rem; border-radius: 4px; }
@@ -1409,7 +1408,6 @@ body, .diary-book { background: var(--journal-velvet); }
 .avatar-prompts { flex-wrap: wrap; justify-content: center; }
 .avatar-prompts button { min-height: 2.7rem; }
 .love-scanner { gap: 1.8rem; justify-content: center; }
-.scanner-crystal { border: 0; border-radius: 0; width: 10rem; height: 9rem; font-size: 8rem; line-height: 1; color: var(--rose-glow); background: linear-gradient(145deg, var(--warm), var(--rose-glow) 32%, var(--burgundy) 59%, var(--rose-glow) 78%, var(--gold-soft)); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px color-mix(in oklab, var(--rose-glow) 55%, transparent)); box-shadow: none; }
 .scanner-ring { box-shadow: inset 0 0 20px color-mix(in oklab, var(--gold-soft) 8%, transparent); }
 .scanner-pad:hover { background: var(--journey-glass); color: var(--gold-soft); }
 .notebook-texture { opacity: .85; }
@@ -1592,7 +1590,7 @@ body, .diary-book { background: var(--journal-velvet); }
 .envelope-open .envelope-seal i:last-child { animation-name: wax-break-right; }
 @keyframes wax-break-left { 0% { opacity: 1; } 100% { transform: translate(-40px, 70px) rotate(-45deg); opacity: 0; } }
 @keyframes wax-break-right { 0% { opacity: 1; } 100% { transform: translate(40px, 60px) rotate(40deg); opacity: 0; } }
-.heart-shower { z-index: 100; }
+.heart-shower { z-index: 50; width: 100vw; height: 100vh; transform: translate3d(0,0,0); }
 .heart-shower span { color: var(--journal-gold); }
 .secret-gateway { border-radius: 6px; }
 .secret-gateway button { white-space: normal; line-height: 1.4; }
@@ -1624,3 +1622,36 @@ body, .diary-book { background: var(--journal-velvet); }
 .stardust { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--journal-gold); box-shadow: 0 0 6px var(--journal-gold); animation: stardust-drift 5s ease-in-out infinite; will-change: transform, opacity; pointer-events: none; }
 @keyframes stardust-drift { 0%,100% { opacity: 0; transform: translate3d(0,0,0); } 50% { opacity: .9; transform: translate3d(8px,-26px,0); } }
 @media (prefers-reduced-motion: reduce) { .foil-line, .cake-crumb, .stardust { animation: none; opacity: 1; } .cake-crumb, .stardust { display: none; } }
+
+/* Stable gift geometry and biometric constellation reveal. */
+.journey-pill { padding-right: 2.3rem; }
+.gift-box, .gift-box:hover { height: 220px; min-height: 220px; aspect-ratio: auto; padding: 0; display: block; perspective: 900px; isolation: isolate; border-color: var(--journal-gold); }
+.gift-promise { position: absolute; inset: 1rem; display: grid; place-items: center; max-width: none; padding: .8rem; border: 1px solid color-mix(in oklab, var(--journal-gold) 45%, transparent); border-radius: 4px; background: var(--journal-deep); font-size: .85rem; line-height: 1.55; opacity: 0; transform: translate3d(0,24px,0); transition: opacity .5s .45s, transform .65s .35s; overflow-wrap: anywhere; }
+.gift-label { position: absolute; bottom: .8rem; left: 0; right: 0; z-index: 2; color: var(--foil-highlight); font-family: var(--font-display); font-size: .85rem; pointer-events: none; transition: opacity .2s; }
+.gift-box.is-open .gift-label { opacity: 0; }
+.gift-box.is-open .gift-promise { opacity: 1; transform: translate3d(0,0,0); }
+.gift-box .gift-lid { z-index: 3; will-change: transform; backface-visibility: hidden; }
+.gift-box.is-open .gift-lid { transform: rotateX(115deg) translate3d(0,-12px,0); }
+.gift-ribbon-particles { position: absolute; left: 50%; top: 50%; pointer-events: none; z-index: 4; }
+.gift-ribbon-particles i { position: absolute; width: 3px; height: 10px; background: var(--journal-gold); animation: ribbon-release .85s ease-out forwards; }
+@keyframes ribbon-release { from { opacity: 1; transform: rotate(var(--ribbon-angle)) translate3d(0,0,0); } to { opacity: 0; transform: rotate(var(--ribbon-angle)) translate3d(0,-60px,0) rotate(120deg); } }
+.constellation-sky { overflow: hidden; }
+.constellation-scan { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; padding: 1rem; }
+.constellation-fingerprint-stage { width: 160px; height: 160px; position: relative; display: grid; place-items: center; }
+.constellation-fingerprint, .constellation-fingerprint:hover { position: relative; width: 120px; height: 120px; padding: 0; border-radius: 50%; color: var(--journal-gold); background: radial-gradient(circle, var(--velvet-crimson), var(--journal-deep)); border: 1px solid var(--journal-gold); box-shadow: var(--ruby-glow); touch-action: none; user-select: none; -webkit-touch-callout: none; }
+.constellation-sky .scanner-progress { inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); }
+.constellation-energy-ring { position: absolute; inset: 18px; border: 1px solid var(--journal-gold); border-radius: 50%; animation: constellation-energy 2.4s ease-out infinite; pointer-events: none; }
+.constellation-energy-ring.ring-delayed { animation-delay: 1.2s; }
+@keyframes constellation-energy { from { transform: scale(.85); opacity: .6; } to { transform: scale(1.4); opacity: 0; } }
+.constellation-scan-line { position: absolute; left: 18%; right: 18%; top: 25%; height: 2px; background: var(--foil-highlight); box-shadow: var(--journey-gold-shadow); animation: fingerprint-sweep 1s ease-in-out infinite alternate; }
+@keyframes fingerprint-sweep { to { transform: translate3d(0,60px,0); } }
+.constellation-percent { min-height: 1rem; font-variant-numeric: tabular-nums; }
+.constellation-reveal { position: absolute; inset: 0; animation: constellation-reveal .7s ease both; }
+@keyframes constellation-reveal { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+.constellation-auto-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: constellation-line .3s linear forwards; }
+@keyframes constellation-line { to { stroke-dashoffset: 0; } }
+.constellation-auto-star { display: grid; place-items: center; pointer-events: none; opacity: 0; animation: constellation-light .5s ease forwards; text-shadow: 0 0 12px var(--journal-gold); }
+@keyframes constellation-light { to { opacity: 1; } }
+.constellation-scan-line, .constellation-energy-ring, .gift-promise, .constellation-reveal { will-change: transform, opacity; }
+@media (max-width: 640px) { .gift-box, .gift-box:hover { height: 180px; min-height: 180px; } .gift-promise { inset: 1.1rem; font-size: .95rem; padding: 1rem; } }
+@media (prefers-reduced-motion: reduce) { .constellation-energy-ring, .constellation-scan-line, .gift-ribbon-particles { display: none; } .constellation-reveal, .constellation-auto-line, .constellation-auto-star { animation-duration: .01s; animation-delay: 0s !important; } .gift-promise { transition: none; } }
