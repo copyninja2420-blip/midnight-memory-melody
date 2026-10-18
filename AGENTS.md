@@ -21,3 +21,7 @@
 - Keep story sound effects in an independent cached Web Audio context; this prevents page rustles from replacing or pausing the shared music element.
 - Portal viewport-wide heart showers to document.body; this avoids clipping and transformed containing blocks in chapter content.
 - Keep device-local voice moments separate from the music library and revoke replaced object URLs; this preserves user-owned tracks and releases media resources.
+- Keep the romantic countdown calculation in a tested browser-safe utility, separate from historical milestones; this prevents a future target from changing past story dates.
+- Reuse the cached ruby geometry and palette across chapter visits and preload browser scene modules at boot; this avoids rebuilding the heart and delays model fetching less.
+- Keep song management in an explicitly opened dialog, not a floating dropdown; this prevents song titles from obscuring chapter headings.
+- Use a cancellable hold-scan hook for automatic constellation reveals; this handles pointer cancellation, keyboard input and hidden tabs consistently.

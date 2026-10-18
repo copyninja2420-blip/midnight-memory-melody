@@ -26,9 +26,9 @@ export function BirthdayCake({ onEnter }: { onEnter: () => void }) {
 
   return (
     <section aria-labelledby="cake-title" className={`birthday-welcome ${leaving ? "birthday-leaving" : ""}`}>
-      {mounted && <Atmosphere particles={14} hearts={3} />}
+      {mounted && phase !== 'cut' && <Atmosphere particles={6} hearts={2} />}
       {phase === "cut" && <div className="cake-celebration" aria-hidden="true">
-        {Array.from({ length: 28 }, (_, i) => <span key={i} className={i % 3 === 0 ? "cake-heart" : "cake-confetti"} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 7) * 0.13}s`, "--confetti-drift": `${(i % 2 ? 1 : -1) * (20 + i * 2)}px` } as React.CSSProperties}>{i % 3 === 0 ? "♥" : ""}</span>)}
+        {Array.from({ length: 15 }, (_, i) => <span key={i} className={i % 3 === 0 ? "cake-heart" : "cake-confetti"} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 7) * 0.13}s`, "--confetti-drift": `${(i % 2 ? 1 : -1) * (20 + i * 2)}px` } as React.CSSProperties}>{i % 3 === 0 ? "♥" : ""}</span>)}
       </div>}
       <div className="cake-welcome-content">
         <header className="text-center">
