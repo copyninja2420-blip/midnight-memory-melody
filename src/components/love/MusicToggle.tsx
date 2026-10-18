@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Pause, Play, Plus, SkipForward, Trash2 } from "lucide-react";
+import { ListMusic, Pause, Play, Plus, SkipForward, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { playlist as bundledPlaylist, type Track } from "@/content/loveStory";
 import {
   addStoredTracks,
@@ -137,7 +138,6 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
       const wasEmpty = playlist.length === 0;
       setUserTracks((prev) => [...prev, ...added.map(toUserTrack)]);
       if (wasEmpty) { autoNextRef.current = true; setIndex(0); }
-      setManage(true);
       setUploadError("");
     } catch { setUploadError("This song couldn’t be saved. Please try again."); }
     if (fileRef.current) fileRef.current.value = "";
@@ -220,16 +220,20 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
 
         {userTracks.length > 0 && (
           <>
-            <Button variant="ghost"
+            <Button variant="ghost" size="icon"
               type="button"
               onClick={() => setManage((m) => !m)}
               aria-label={manage ? "Close music library" : "Open music library"}
-              className="h-5 px-1 text-left text-[0.6rem] opacity-60"
+              title="Open music library"
+              className="absolute right-1 top-1 size-7 text-gold-soft"
             >
-              {userTracks.length} of your songs
+              <ListMusic className="size-4" />
             </Button>
-            {manage && (
-              <ul className="music-library max-h-40 overflow-y-auto pr-1">
+            <Dialog open={manage} onOpenChange={setManage}>
+              <DialogContent className="music-library-dialog border-gold-soft/40 bg-background text-gold-soft">
+              <DialogTitle>Your songs</DialogTitle>
+              <DialogDescription>Music library</DialogDescription>
+              <ul className="max-h-64 overflow-y-auto pr-1">
                 {userTracks.map((t, i) => (
                   <li key={t.id} className="flex items-center gap-1 py-0.5">
                     <Button variant="ghost"
@@ -250,7 +254,8 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
                   </li>
                 ))}
               </ul>
-            )}
+              </DialogContent>
+            </Dialog>
           </>
         )}
         {uploadError && <p role="alert" className="max-w-56 text-xs text-rose-soft">{uploadError}</p>}

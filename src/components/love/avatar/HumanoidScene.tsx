@@ -186,15 +186,15 @@ export default function HumanoidScene({ action, burst, onTap }: { action: Action
     setPalette({ wine: token("--avatar-wine"), light: token("--avatar-light"), rose: token("--avatar-rose"), leaf: token("--avatar-leaf") });
   }, []);
   if (!palette) return null;
-  return <Canvas shadows dpr={[1, 2]} camera={{ position: [0, 1.95, 5], fov: 38 }} onCreated={({ camera }) => camera.lookAt(0, 1.62, 0)}>
+  return <Canvas shadows dpr={[1, 1.5]} camera={{ position: [0, 1.95, 5], fov: 38 }} onCreated={({ camera }) => camera.lookAt(0, 1.62, 0)}>
     <color attach="background" args={[palette.wine]} />
     <ambientLight intensity={0.7} />
     <directionalLight position={[2, 4, 4]} intensity={2.2} color={palette.light} castShadow shadow-mapSize-width={1024} shadow-mapSize-height={1024} />
     <directionalLight position={[-3, 2, -1]} intensity={1.5} color={palette.rose} />
     <Environment resolution={64}><Lightformer intensity={2} position={[0, 4, 3]} scale={[6, 6, 1]} color={palette.light} /><Lightformer intensity={1} position={[-4, 2, 0]} rotation-y={Math.PI / 2} scale={[6, 6, 1]} color={palette.rose} /></Environment>
     <Suspense fallback={<Html center><p className="script text-2xl text-gold-soft">A little magic is on its way…</p></Html>}><Character action={action} burst={burst} onTap={onTap} palette={palette} /></Suspense>
-    <ContactShadows position={[0, -0.02, 0]} opacity={0.55} scale={5} blur={2.5} far={4} frames={Infinity} />
+    <ContactShadows position={[0, -0.02, 0]} opacity={0.55} scale={5} blur={2.5} far={4} frames={1} />
     {action !== "idle" && <RomanticParticles action={action} burst={burst} palette={palette} />}
-    <Sparkles count={35} scale={[4, 3.5, 2]} position={[0, 1.5, 0]} size={2} speed={0.25} color={palette.light} />
+    <Sparkles count={17} scale={[4, 3.5, 2]} position={[0, 1.5, 0]} size={2} speed={0.25} color={palette.light} />
   </Canvas>;
 }useGLTF.preload(modelAsset.url);

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { extraSurprises } from "@/content/loveStory";
 import { Typewriter } from "./Typewriter";
+import { Button } from '@/components/ui/button';
+import { cappedParticleCount } from '@/lib/particleBudget';
 
 /** Three little hidden reveals that appear once the letter is opened. */
 export function MoreSurprises() {
@@ -12,21 +14,20 @@ export function MoreSurprises() {
     setOpen((o) => (o.includes(i) ? o : [...o, i]));
     if (extraSurprises[i]?.hearts) {
       setRain(true);
-      window.setTimeout(() => setRain(false), 14000);
     }
   };
 
   return (
     <div className="mx-auto mt-12 grid max-w-sm gap-4">
       {rain && (
-        createPortal(<div className="heart-shower" aria-hidden="true">
-          {Array.from({ length: 84 }, (_, i) => (
+        createPortal(<div className="heart-shower fixed inset-0 w-screen h-screen pointer-events-none z-50" aria-hidden="true">
+          {Array.from({ length: cappedParticleCount(84) }, (_, i) => (
             <span
               key={i}
               style={{
                 left: `${(i * 23) % 100}%`,
                 fontSize: 14 + (i % 6) * 5,
-                animationDelay: `${(i % 14) * 0.45}s`,
+                animationDelay: `${-i * .31}s`,
                 animationDuration: `${4.5 + (i % 5) * 0.8}s`,
               }}
             >
@@ -48,14 +49,14 @@ export function MoreSurprises() {
               <Typewriter text={s.text} speed={30} />
             </p>
           ) : (
-            <button
+            <Button variant="ghost"
               type="button"
               onClick={() => reveal(i)}
               className="btn-love mt-4 scale-90"
             >
               <span className="btn-love-glow" />
               <span className="relative">{s.button}</span>
-            </button>
+            </Button>
           )}
         </div>
       ))}

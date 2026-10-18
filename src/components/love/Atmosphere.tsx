@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { cappedParticleCount, MAX_ACTIVE_PARTICLES } from '@/lib/particleBudget';
 
 const rand = (seed: number) => {
   const x = Math.sin(seed * 9301 + 49297) * 233280;
@@ -30,8 +31,8 @@ export function Atmosphere({
     };
   }, []);
 
-  const particleCount = mobile ? Math.min(particles, 14) : particles;
-  const heartCount = mobile ? Math.min(hearts, 5) : hearts;
+  const particleCount = cappedParticleCount(mobile ? Math.min(particles, 14) : particles);
+  const heartCount = Math.min(MAX_ACTIVE_PARTICLES - particleCount, cappedParticleCount(mobile ? Math.min(hearts, 5) : hearts));
   const dust = useMemo(
     () =>
       Array.from({ length: particleCount }, (_, i) => ({
