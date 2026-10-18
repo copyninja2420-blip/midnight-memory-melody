@@ -1,14 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Lightformer } from '@react-three/drei';
 import * as THREE from 'three';
 
-function Ruby({ color, light, progress, active }: { color: string; light: string; progress: number; active: boolean }) {
-  const mesh = useRef<THREE.Mesh>(null);
-  const core = useRef<THREE.PointLight>(null);
-  const mat = useRef<THREE.MeshPhysicalMaterial>(null);
-  const time = useRef(0);
-  const geometry = useMemo(() => {
+let geometry: THREE.ExtrudeGeometry | undefined;
+let palette: { color: string; light: string } | undefined;
+export function preloadCrystalHeart() {
+  if (!geometry) {
     // Smooth, organic heart silhouette with deep rounded bevels.
     const s = new THREE.Shape();
     s.moveTo(0, -1);
@@ -17,9 +15,18 @@ function Ruby({ color, light, progress, active }: { color: string; light: string
     s.bezierCurveTo(.32, 1.12, 1.08, 1.02, 1.2, .45);
     s.bezierCurveTo(1.35, -.2, .35, -.62, 0, -1);
     const g = new THREE.ExtrudeGeometry(s, { depth: .22, bevelEnabled: true, bevelSize: .32, bevelThickness: .38, bevelSegments: 10, curveSegments: 36 });
-    g.center(); g.computeVertexNormals(); return g;
-  }, []);
-  useEffect(() => () => geometry.dispose(), [geometry]);
+    g.center(); g.computeVertexNormals(); geometry = g;
+  }
+  const styles = getComputedStyle(document.documentElement);
+  palette = { color: styles.getPropertyValue('--avatar-rose').trim(), light: styles.getPropertyValue('--avatar-light').trim() };
+  return palette;
+}
+
+function Ruby({ color, light, progress, active }: { color: string; light: string; progress: number; active: boolean }) {
+  const mesh = useRef<THREE.Mesh>(null);
+  const core = useRef<THREE.PointLight>(null);
+  const mat = useRef<THREE.MeshPhysicalMaterial>(null);
+  const time = useRef(0);
   useFrame((_, delta) => {
     time.current += Math.min(delta, .05);
     if (!mesh.current) return;
@@ -31,7 +38,7 @@ function Ruby({ color, light, progress, active }: { color: string; light: string
     if (mat.current) mat.current.emissiveIntensity = .18 + beat * .35 + progress * .004;
   });
   return <>
-    <mesh ref={mesh} geometry={geometry}>
+    <mesh ref={mesh} geometry={geometry} dispose={null}>
       <meshPhysicalMaterial ref={mat} color={color} emissive={color} roughness={.06} metalness={0} clearcoat={1} clearcoatRoughness={.02} ior={1.76} sheen={.4} sheenColor={light} transparent opacity={.92} />
     </mesh>
     <pointLight ref={core} position={[0, 0, .2]} color={color} distance={4} />
@@ -39,8 +46,6 @@ function Ruby({ color, light, progress, active }: { color: string; light: string
   </>;
 }
 export default function CrystalHeart({ progress, active }: { progress: number; active: boolean }) {
-  const [colors, setColors] = useState<{ color: string; light: string } | null>(null);
-  useEffect(() => { const s = getComputedStyle(document.documentElement); setColors({ color: s.getPropertyValue('--avatar-rose').trim(), light: s.getPropertyValue('--avatar-light').trim() }); }, []);
-  if (!colors) return null;
+  const [colors] = useState(() => palette ?? preloadCrystalHeart());
   return <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 4.6], fov: 40 }} gl={{ alpha: true, powerPreference: 'high-performance' }}><ambientLight intensity={.6} /><directionalLight position={[2, 3, 4]} intensity={3} color={colors.light} /><Ruby {...colors} progress={progress} active={active} /></Canvas>;
 }

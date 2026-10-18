@@ -8,6 +8,18 @@ let unlockBound = false;
 export function preloadStorySounds() {
   bytes ??= fetch(pageSound.url).then(r => { if (!r.ok) throw new Error('Sound unavailable'); return r.arrayBuffer(); });
   void bytes.catch(() => { bytes = undefined; });
+  // Decode during boot even if the audio context is still suspended.
+  if (typeof window !== 'undefined') {
+    try {
+      context ??= new AudioContext();
+      decoding ??= bytes.then(data => context?.decodeAudioData(data.slice(0))).then(sound => {
+        if (!sound) throw new Error('Sound unavailable');
+        buffer = sound;
+        return sound;
+      });
+      void decoding.catch(() => { decoding = undefined; });
+    } catch { /* Audio remains optional. */ }
+  }
   if (typeof window !== 'undefined' && !unlockBound) {
     unlockBound = true;
     // Decode on the first tap so every later turn plays instantly from memory.
@@ -65,4 +77,22 @@ export function playCelebration() {
       osc.onended = () => { osc.disconnect(); gain.disconnect(); };
     });
   } catch { /* Optional. */ }
+}
+
+export function playHeartbeat(rate: number) {
+  try {
+    const ctx = audioContext();
+    [0, .16].forEach(offset => {
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const at = ctx.currentTime + offset;
+      oscillator.frequency.value = 58 + rate * 20;
+      gain.gain.setValueAtTime(.2, at);
+      gain.gain.exponentialRampToValueAtTime(.001, at + .12);
+      oscillator.connect(gain).connect(ctx.destination);
+      oscillator.start(at);
+      oscillator.stop(at + .14);
+      oscillator.onended = () => { oscillator.disconnect(); gain.disconnect(); };
+    });
+  } catch { /* Optional effect. */ }
 }

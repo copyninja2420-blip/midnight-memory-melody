@@ -78,7 +78,14 @@ function LoveStoryPage() {
     setTurning(reduced ? null : journal.chapters[CHAPTERS.findIndex((c) => c.stage === stage)] ?? journal.title);
   }, [stage]);
   const toNames = useCallback(() => setStage("names"), [setStage]);
-  useEffect(() => { preloadStorySounds(); void import("@/components/love/PageCurl"); void import("@/components/love/avatar/HumanoidScene"); return () => timers.current.forEach(clearTimeout); }, []);
+  useEffect(() => {
+    preloadStorySounds();
+    void import("@/components/love/PageCurl");
+    void import("@/components/love/CrystalHeart").then(module => module.preloadCrystalHeart());
+    void import("@/components/love/avatar/HumanoidScene");
+    void import("@/components/love/companion/CompanionScene");
+    return () => timers.current.forEach(clearTimeout);
+  }, []);
   useEffect(() => {
     if (!turning) return;
     const failsafe = setTimeout(() => { setTurning(null); turnLock.current = false; }, 1450);
@@ -90,7 +97,7 @@ function LoveStoryPage() {
     <main className="diary-book relative min-h-[100svh] overflow-x-hidden bg-background text-foreground" data-journey={stage}>
       {/* One music player for the whole visit — starts on unlock, never restarts */}
       <MusicToggle autoplay />
-      <Atmosphere particles={18} hearts={6} />
+      {stage !== 'story' && <Atmosphere particles={8} hearts={3} />}
       <div className="journal-corners" aria-hidden="true"><span>❧</span><span>❧</span><span>❧</span><span>❧</span></div>
 
       {stage !== "cover" && stage !== "closed" && <nav className="diary-ribbons" aria-label="Diary chapters">

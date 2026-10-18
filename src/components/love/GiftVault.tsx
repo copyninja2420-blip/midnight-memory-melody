@@ -20,9 +20,9 @@ export function GiftVault() {
           return (
             <Button variant="ghost" key={g.label} type="button" aria-expanded={isOpen} aria-label={isOpen ? g.promise : `Open ${g.label}`} onClick={() => { if (!isOpen) { playCelebration(); setOpen((o) => [...o, i]); } }} className={`gift-box ${isOpen ? "is-open" : ""}`}>
               <span className="gift-lid" aria-hidden="true"><i /><i /><b>❦</b></span>
-              <span className="gift-promise">
-                {isOpen ? g.promise : g.label}
-              </span>
+              <span className="gift-promise" aria-hidden={!isOpen}>{g.promise}</span>
+              <span className="gift-label" aria-hidden={isOpen}>{g.label}</span>
+              {isOpen && <span className="gift-ribbon-particles" aria-hidden="true">{Array.from({ length: 6 }, (_, n) => <i key={n} style={{ '--ribbon-angle': `${n * 60}deg` } as React.CSSProperties} />)}</span>}
             </Button>
           );
         })}

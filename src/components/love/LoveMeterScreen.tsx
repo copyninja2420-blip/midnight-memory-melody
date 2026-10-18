@@ -2,29 +2,11 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Fingerprint } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { journal } from "@/content/loveStory";
-import { playCelebration } from "@/lib/storySounds";
+import { playCelebration, playHeartbeat } from "@/lib/storySounds";
 
 const CrystalHeart = lazy(() => import('./CrystalHeart'));
 
 const DURATION = 3200;
-
-function beat(rate: number) {
-  try {
-    const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-    const ctx = new Ctx();
-    [0, 0.16].forEach((at) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.frequency.value = 58 + rate * 20;
-      gain.gain.setValueAtTime(0.25, ctx.currentTime + at);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + at + 0.12);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(ctx.currentTime + at);
-      osc.stop(ctx.currentTime + at + 0.14);
-    });
-    setTimeout(() => void ctx.close(), 500);
-  } catch { /* optional */ }
-}
 
 export function LoveMeterScreen({ onContinue }: { onContinue: () => void }) {
   const [progress, setProgress] = useState(0);
@@ -47,12 +29,12 @@ export function LoveMeterScreen({ onContinue }: { onContinue: () => void }) {
     setHolding(true);
     const began = performance.now() - (progress / 100) * DURATION;
     const tick = (now: number) => {
-      const pct = Math.min(100, ((now - began) / DURATION) * 100);
+      const pct = Math.min(100, Math.floor(((now - began) / DURATION) * 100));
       setProgress(pct);
       const interval = 700 - pct * 4.6;
       if (now - lastBeat.current > interval) {
         lastBeat.current = now;
-        beat(pct / 100);
+        playHeartbeat(pct / 100);
         navigator.vibrate?.(30);
       }
       if (pct >= 100) { frame.current = null; setHolding(false); setDone(true); navigator.vibrate?.([100, 80, 160]); return; }
@@ -82,7 +64,7 @@ export function LoveMeterScreen({ onContinue }: { onContinue: () => void }) {
 
       <div className="scanner-heart-stage" aria-hidden="true">
         <span className="scanner-ring" /><span className="scanner-ring scanner-ring-2" />
-        <div className="scanner-ruby">{mounted && <Suspense fallback={<span className="scanner-crystal">♥</span>}><CrystalHeart progress={progress} active={holding} /></Suspense>}</div>
+        <div className="scanner-ruby">{mounted && <Suspense fallback={null}><CrystalHeart progress={progress} active={holding} /></Suspense>}</div>
       </div>
       <svg className={`scanner-ecg ${holding ? 'is-scanning' : ''}`} viewBox="0 0 360 50" aria-hidden="true"><path d="M0 25H60L72 18L84 25H115L130 39L144 3L159 46L171 25H225L240 18L253 25H360" pathLength="100" /></svg>
 
