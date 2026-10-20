@@ -5,6 +5,8 @@ let bytes: Promise<ArrayBuffer> | undefined;
 let buffer: AudioBuffer | undefined;
 let decoding: Promise<AudioBuffer> | undefined;
 let unlockBound = false;
+let turnSource: AudioBufferSourceNode | undefined;
+let turnRequest = 0;
 export function preloadStorySounds() {
   bytes ??= fetch(pageSound.url).then(r => { if (!r.ok) throw new Error('Sound unavailable'); return r.arrayBuffer(); });
   void bytes.catch(() => { bytes = undefined; });
@@ -42,11 +44,15 @@ function audioContext() {
   return context;
 }
 export function playPageTurn() {
+  const request = ++turnRequest;
   try {
     const ctx = audioContext();
     preloadStorySounds();
     const play = (sound: AudioBuffer) => {
+      if (request !== turnRequest) return;
+      try { turnSource?.stop(); } catch { /* Already ended. */ }
       const source = ctx.createBufferSource();
+      turnSource = source;
       const gain = ctx.createGain();
       source.buffer = sound;
       const now = ctx.currentTime;
@@ -56,7 +62,7 @@ export function playPageTurn() {
       gain.gain.linearRampToValueAtTime(0, now + 1.3);
       source.connect(gain).connect(ctx.destination);
       source.onended = () => { source.disconnect(); gain.disconnect(); };
-      source.start(now, .15, 1.3);
+      source.start(now, 0, Math.min(1.3, sound.duration));
     };
     if (buffer) play(buffer);
     else if (bytes) {
@@ -64,6 +70,19 @@ export function playPageTurn() {
       void decoding.then(sound => { buffer = sound; play(sound); }).catch(() => { decoding = undefined; });
     }
   } catch { /* Optional effects never block a page turn. */ }
+}
+/** Quiet brass latch/compass tick, independent of the user's music. */
+export function playMechanicalTick() {
+  try {
+    const ctx = audioContext();
+    [0, .07].forEach((delay, i) => {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain(); const at = ctx.currentTime + delay;
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(i ? 420 : 760, at); osc.frequency.exponentialRampToValueAtTime(110, at + .08);
+      gain.gain.setValueAtTime(.045, at); gain.gain.exponentialRampToValueAtTime(.001, at + .12);
+      osc.connect(gain).connect(ctx.destination); osc.start(at); osc.stop(at + .14);
+      osc.onended = () => { osc.disconnect(); gain.disconnect(); };
+    });
+  } catch { /* Sound is optional. */ }
 }
 export function playCelebration() {
   try {
