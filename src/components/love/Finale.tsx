@@ -43,7 +43,7 @@ export function Finale() {
           <>
             <div className="relative mt-8">
               <div className="answer-glow" aria-hidden="true" />
-              {Array.from({ length: 14 }, (_, i) => <span key={i} className="stardust" aria-hidden="true" style={{ left: `${(i * 29) % 100}%`, top: `${(i * 41) % 100}%`, animationDelay: `${(i % 7) * 0.6}s` }} />)}
+              {Array.from({ length: 10 }, (_, i) => <span key={i} className="stardust" aria-hidden="true" style={{ left: `${(i * 29) % 100}%`, top: `${(i * 41) % 100}%`, animationDelay: `${(i % 7) * 0.6}s` }} />)}
               <p className="foil-line relative font-display text-[1.55rem] leading-snug tracking-wide" onAnimationEnd={handleDone}>{finale.answer}</p>
               <div className="relative mt-6 space-y-2">
                 {finale.beats.slice(0, beat).map((b) => (
@@ -95,7 +95,7 @@ export function Finale() {
 
             {forever && (
               <div className="pointer-events-none fixed inset-0 z-40" aria-hidden="true">
-                {Array.from({ length: 22 }, (_, i) => (
+                {Array.from({ length: 20 }, (_, i) => (
                   <span
                     key={i}
                     className="confetti-heart"
