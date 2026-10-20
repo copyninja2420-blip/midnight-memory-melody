@@ -1,9 +1,10 @@
 # Roadmap
 
-- [ ] Remove floating song popup and obsolete scanner heart; preload scene/audio resources.
-- [ ] Implement hold-to-connect constellation and fixed-size unwrapping gifts.
-- [ ] Count down to November 4, 2027 with date tests.
-- [ ] Keep continuous viewport heart shower within a 35-particle pool; verify mobile journey.
+- [x] Remove floating song popup and obsolete scanner heart; preload scene/audio resources.
+- [x] Implement hold-to-connect constellation and fixed-size unwrapping gifts; verified cancellation and automatic heart formation.
+- [x] Count down to November 4, 2027 at midnight India time with passing date tests.
+- [x] Keep continuous viewport heart shower within a 35-particle pool; verified through the QR footer after 16 seconds, with mobile and desktop gift checks.
+- [ ] Measure sustained 60fps and first-frame GPU readiness on physical Android hardware — unavailable in the browser sandbox.
 
 - [x] Upgrade closed leather book, centered emblem and double-sided chapter turns with uploaded sound.
 - [x] Upgrade ruby scanner, pencil destiny animation, forward-facing avatar, textured rose/petals and kiss gesture.

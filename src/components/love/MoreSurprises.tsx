@@ -31,7 +31,7 @@ export function MoreSurprises() {
                 animationDuration: `${4.5 + (i % 5) * 0.8}s`,
               }}
             >
-              {i % 5 === 0 ? "✦" : i % 3 === 0 ? "💖" : i % 3 === 1 ? "❤️" : "💗"}
+              {i % 5 === 0 ? "✦" : "♥"}
             </span>
           ))}
         </div>, document.body)
