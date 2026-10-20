@@ -1,5 +1,10 @@
 # Roadmap
 
+- [ ] Polish header, cover, cake, ruby pulse, destiny and forward-facing two-hand avatar pose.
+- [ ] Stabilize reasons, answer/footer and three-depth viewport heart shower.
+- [ ] Add scratch note, WhatsApp coupons, date-locked capsule, memory compass and triple-S secret.
+- [ ] Test reveal thresholds, date lock, coupon links and rapid taps; verify the complete journey and new surprises.
+
 - [x] Remove floating song popup and obsolete scanner heart; preload scene/audio resources.
 - [x] Implement hold-to-connect constellation and fixed-size unwrapping gifts; verified cancellation and automatic heart formation.
 - [x] Count down to November 4, 2027 at midnight India time with passing date tests.
