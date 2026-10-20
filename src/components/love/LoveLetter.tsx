@@ -27,7 +27,7 @@ export function LoveLetter() {
       say("Read every word… I meant all of it ❤️", 5200);
     }, 1200);
     setBurst(
-      Array.from({ length: 26 }, () => ({
+      Array.from({ length: 20 }, () => ({
         left: Math.random() * 100,
         size: 14 + Math.random() * 22,
         delay: Math.random() * 0.6,

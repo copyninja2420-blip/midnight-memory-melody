@@ -37,6 +37,7 @@ function Ruby({ color, light, progress, active }: { color: string; light: string
     if (core.current) core.current.intensity = 2 + beat * 6 + progress * .04;
     if (mat.current) mat.current.emissiveIntensity = .18 + beat * .35 + progress * .004;
   });
+  if (!geometry) return null;
   return <>
     <mesh ref={mesh} geometry={geometry} dispose={null}>
       <meshPhysicalMaterial ref={mat} color={color} emissive={color} roughness={.06} metalness={0} clearcoat={1} clearcoatRoughness={.02} ior={1.76} sheen={.4} sheenColor={light} transparent opacity={.92} />
