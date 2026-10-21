@@ -1664,7 +1664,7 @@ body, .diary-book { background: var(--journal-velvet); }
   --surprise-stamp: var(--velvet-crimson);
   --surprise-shadow: 0 14px 36px var(--journal-shadow);
   --secret-dim: color-mix(in oklab, var(--journal-deep) 90%, transparent);
-  --secret-glass: color-mix(in oklab, var(--velvet-highlight) 75%, transparent);
+  --secret-glass: color-mix(in oklab, var(--velvet-highlight) 95%, transparent);
 }
 .journey-pill { width: min(19rem, calc(100vw - 5rem)); min-width: 0; }
 .lock-medallion span, .cover-medallion .romantic { width: 4rem; height: 4rem; display: grid; place-items: center; font-size: 3.2rem; line-height: 1.25; padding: .2rem .15rem 0 0; transform: none; }
@@ -1752,7 +1752,7 @@ body, .diary-book { background: var(--journal-velvet); }
 body:has(.secret-story-modal) [data-slot="dialog-overlay"] { background: var(--secret-dim); backdrop-filter: blur(3px); }
 .secret-story-modal { z-index: 115; width: min(88vw,430px); padding: 3rem 2rem; border: 1px solid var(--journal-gold); border-radius: 8px; background: var(--secret-glass); backdrop-filter: blur(20px); box-shadow: var(--surprise-shadow); color: var(--warm); text-align: center; gap: 1.3rem; }
 .secret-modal-crest { font-size: 3.8rem; color: var(--journal-gold); }.secret-story-modal h2 { font-size: 1.9rem; line-height: 1.25; }.secret-story-message { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.6; color: var(--warm); }.secret-story-signature { font-size: 1.6rem; color: var(--journal-gold); }
-.secret-rose-shower { position: fixed; inset: 0; width: 100vw; height: 100vh; overflow: hidden; pointer-events: none; z-index: 114; }
+.secret-rose-shower { position: fixed; inset: 0; width: 100vw; height: 100vh; overflow: hidden; pointer-events: none; z-index: 114; background: var(--secret-dim); }
 .secret-rose-shower i { position: absolute; top: -10vh; width: 18px; height: 25px; border-radius: 75% 15% 65% 30%; background: radial-gradient(ellipse at 25% 20%, var(--rose-glow), var(--velvet-crimson) 50%, var(--journal-wine)); box-shadow: inset 1px 1px 1px var(--rose-glow); animation: secret-petal-fall linear infinite; will-change: transform; }
 @keyframes secret-petal-fall { 0% { transform: translate3d(0,0,0) rotate(-20deg); } 50% { transform: translate3d(var(--petal-wind),65vh,0) rotate(130deg); } 100% { transform: translate3d(0,125vh,0) rotate(280deg); } }
 @media (max-width: 480px) {

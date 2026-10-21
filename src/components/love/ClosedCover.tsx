@@ -16,7 +16,7 @@ export function ClosedCover({ onOpen }: { onOpen: () => void }) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setOpening(true);
     playPageTurn();
-    timer.current = window.setTimeout(onOpen, reduced ? 0 : 1250);
+    timer.current = setTimeout(onOpen, reduced ? 0 : 1250);
   };
   const tapCrest = () => {
     window.dispatchEvent(new Event('journal-crest-tap'));
