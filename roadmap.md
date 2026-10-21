@@ -1,9 +1,9 @@
 # Roadmap
 
-- [ ] Polish header, cover, cake, ruby pulse, destiny and forward-facing two-hand avatar pose.
-- [ ] Stabilize reasons, answer/footer and three-depth viewport heart shower.
-- [ ] Add scratch note, WhatsApp coupons, date-locked capsule, memory compass and triple-S secret.
-- [ ] Test reveal thresholds, date lock, coupon links and rapid taps; verify the complete journey and new surprises.
+- [x] Polish header, centered crest, cancellable cake gesture, centered dynamic ruby pulse and red destiny highlight; verified existing forward-facing two-hand avatar pose without replacing its model.
+- [x] Stabilize reasons and answer/footer (measured zero footer displacement); verified three-depth 35-particle viewport heart shower.
+- [x] Add scratch note, WhatsApp coupons, date-locked capsule, memory compass and triple-S secret across cover/passcode/memories.
+- [x] Passed 15 rule tests and complete mobile/desktop journey: pointer scratching, four links, capsule locked/unlocked date, four compass points, secret modal, no overflow/errors; same music element playing with zero reloads.
 
 - [x] Remove floating song popup and obsolete scanner heart; preload scene/audio resources.
 - [x] Implement hold-to-connect constellation and fixed-size unwrapping gifts; verified cancellation and automatic heart formation.
@@ -15,7 +15,7 @@
 - [x] Upgrade ruby scanner, pencil destiny animation, forward-facing avatar, textured rose/petals and kiss gesture.
 - [ ] Realistic avatar blinking and facial smile animation — blocked: current model has no facial bones or morph targets; requires a facially rigged replacement model.
 - [x] Upgrade prologue, flip timer, gifts, constellation, letter, device-local voice moment and keepsake footer.
-- [x] Verify complete journey, rose/kiss buttons, gifts, constellation, voice playback, QR download and desktop/mobile rendering. Music retained the same element and played through the journey; initial-load events were observed, so zero reloads is not conclusively verified.
+- [x] Verify complete journey, rose/kiss buttons, gifts, constellation, voice playback, QR download and desktop/mobile rendering. Master-pass verification retained the same playing music element with zero reloads after upload.
 
 - [x] Complete cover → cake → avatar → scanner → names → destiny → Polaroids/letter experience with continuous audio.
 - [x] Add wine/gold filigree, curved 3D page turns, improved cake slicing and notebook handwriting.
