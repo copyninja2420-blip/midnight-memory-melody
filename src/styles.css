@@ -1655,3 +1655,113 @@ body, .diary-book { background: var(--journal-velvet); }
 .constellation-scan-line, .constellation-energy-ring, .gift-promise, .constellation-reveal { will-change: transform, opacity; }
 @media (max-width: 640px) { .gift-box, .gift-box:hover { height: 180px; min-height: 180px; } .gift-promise { inset: 1.1rem; font-size: .95rem; padding: 1rem; } }
 @media (prefers-reduced-motion: reduce) { .constellation-energy-ring, .constellation-scan-line, .gift-ribbon-particles { display: none; } .constellation-reveal, .constellation-auto-line, .constellation-auto-star { animation-duration: .01s; animation-delay: 0s !important; } .gift-promise { transition: none; } }
+
+/* Master edition: stable reveals, tactile goldwork, five personal surprises. */
+:root {
+  --surprise-foil: linear-gradient(125deg, var(--journal-gold), var(--foil-highlight) 35%, var(--journal-gold) 60%, color-mix(in oklab, var(--journal-gold) 70%, var(--journal-wine)));
+  --surprise-paper: linear-gradient(155deg, var(--notebook-paper), color-mix(in oklab, var(--notebook-paper) 88%, var(--journal-gold)));
+  --surprise-border: color-mix(in oklab, var(--journal-gold) 55%, transparent);
+  --surprise-stamp: var(--velvet-crimson);
+  --surprise-shadow: 0 14px 36px var(--journal-shadow);
+  --secret-dim: color-mix(in oklab, var(--journal-deep) 90%, transparent);
+  --secret-glass: color-mix(in oklab, var(--velvet-highlight) 75%, transparent);
+}
+.journey-pill { width: min(19rem, calc(100vw - 5rem)); min-width: 0; }
+.lock-medallion span, .cover-medallion .romantic { width: 4rem; height: 4rem; display: grid; place-items: center; font-size: 3.2rem; line-height: 1.25; padding: .2rem .15rem 0 0; transform: none; }
+.cover-medallion { padding: 0; border-radius: 50%; }
+.closed-cover-face .filigree { text-shadow: var(--journal-emboss), var(--journey-gold-shadow); }
+.scanner-heart-stage { width: 15rem; height: 16rem; flex-shrink: 0; margin: .8rem auto 1rem; }
+.scanner-heart-stage .scanner-ring { inset: .5rem .5rem 1.5rem; }
+.scanner-heart-stage .scanner-ring-2 { inset: 1.8rem 1.8rem 2.8rem; }
+.scanner-heart-stage .scanner-ruby { inset: .1rem 0 1rem; }
+.scanner-heart-stage .scanner-ecg { position: absolute; bottom: -.4rem; left: 50%; transform: translateX(-50%); width: min(85vw, 21rem); height: 2.2rem; z-index: 1; }
+.heart-is-scanning .scanner-ring { animation: centered-heart-pulse var(--beat-speed) ease-out infinite; }
+.heart-is-scanning .scanner-ring-2 { animation-delay: .2s; }
+@keyframes centered-heart-pulse { 0%,100% { transform: scale(1); opacity: .5; } 25% { transform: scale(var(--pulse-scale)); opacity: 1; } }
+.love-scanner { gap: 1.5rem; }
+.destiny-circle { filter: drop-shadow(0 0 5px var(--notebook-red)); animation-duration: .7s; }
+.notebook-result h2 { color: var(--notebook-red); text-shadow: none; }
+.pencil-letter i, .handwriting-letter { will-change: transform, opacity; }
+.cake-half { will-change: transform; }
+.cake-is-cut .cake-half { transition: transform 1s cubic-bezier(.2,.8,.3,1) .55s; }
+.cake-crumb { background: var(--notebook-paper); }
+.cake-cutting-knife { filter: drop-shadow(var(--journey-gold-shadow)); }
+.reason-card, .reason-card:hover { aspect-ratio: 1 / 1.2; height: auto; padding: 0; white-space: normal; background: transparent; }
+.reason-card .flip-face { padding: .8rem; border-radius: 6px; }
+.reason-card .flip-inner.is-flipped .flip-back { border-color: var(--journal-gold); box-shadow: inset 0 0 16px color-mix(in oklab, var(--journal-gold) 12%, transparent), var(--journey-gold-shadow); }
+.reason-card .flip-back > span { font-size: .95rem; line-height: 1.35; overflow-wrap: normal; }
+.finale-content { min-height: 42rem; }
+.finale-answer-slot { position: relative; min-height: 14rem; }
+.finale-reveal-button { position: absolute; top: .5rem; left: 50%; transform: translateX(-50%); height: auto; white-space: normal; width: max-content; max-width: 100%; padding: 1rem 1.5rem; }
+.finale-closing-slot { min-height: 25rem; visibility: hidden; opacity: 0; transition: opacity 1s; }
+.finale-closing-slot.is-visible { visibility: visible; opacity: 1; }
+.heart-shower span { opacity: var(--heart-depth-opacity, .8); animation-name: depth-heart-fall; }
+.heart-shower span:nth-child(3n) { color: var(--rose-glow); }
+@keyframes depth-heart-fall { 0% { transform: translate3d(0,0,0) rotate(-12deg); opacity: 0; } 8% { opacity: var(--heart-depth-opacity,.8); } 50% { transform: translate3d(var(--heart-wind,26px),64vh,0) rotate(18deg); } 100% { transform: translate3d(calc(var(--heart-wind,26px) * -.5),128vh,0) rotate(-15deg); opacity: var(--heart-depth-opacity,.8); } }
+.surprise-section { position: relative; width: 100%; padding: 4rem 1.75rem; text-align: center; }
+.scratch-keepsake { width: min(100%, 350px); aspect-ratio: 5 / 6; position: relative; margin: 2.5rem auto 0; border: 2px solid var(--journal-gold); border-radius: 6px; box-shadow: var(--surprise-shadow); background: var(--surprise-paper); overflow: hidden; }
+.scratch-polaroid { position: absolute; inset: 1rem; display: flex; flex-direction: column; padding: .6rem .6rem 1rem; color: var(--ink); background: var(--notebook-paper); }
+.scratch-polaroid img { width: 100%; height: 70%; object-fit: cover; object-position: center 30%; }
+.scratch-polaroid p { flex: 1; display: grid; place-items: center; font-size: 1.35rem; line-height: 1.35; padding-top: .8rem; }
+.scratch-keepsake canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
+.scratch-keepsake.is-revealed .scratch-polaroid { animation: plaque-bloom .7s ease both; }
+.scratch-sparks { position: absolute; pointer-events: none; z-index: 2; }
+.scratch-sparks i { position: absolute; color: var(--foil-highlight); font-style: normal; font-size: .8rem; text-shadow: var(--journey-gold-shadow); transform: rotate(calc(var(--spark-index) * 60deg)) translate3d(0,-22px,0); }
+.coupon-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem; max-width: 660px; margin: 2.5rem auto 0; }
+.love-coupon { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 285px; border: 1px solid var(--journal-gold); border-radius: 6px; background: var(--surprise-paper); box-shadow: var(--surprise-shadow); color: var(--ink); padding: 1.25rem 1.2rem 0; overflow: hidden; }
+.love-coupon::before { content: ''; position: absolute; inset: .35rem; border: 1px solid color-mix(in oklab, var(--journal-gold) 65%, transparent); pointer-events: none; }
+.coupon-number { font-size: .65rem; font-family: var(--font-sans); color: var(--signature-ink); }
+.coupon-heart { width: 1.5rem; height: 1.5rem; color: var(--signature-ink); margin: 1rem auto .75rem; }
+.love-coupon h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; line-height: 1.3; flex: 1; display: grid; place-items: center; padding-bottom: 1.2rem; }
+.coupon-stub { position: relative; width: calc(100% + 2.4rem); height: 5.8rem; flex-shrink: 0; border-top: 1px dashed var(--journal-gold); display: flex; flex-direction: column; justify-content: center; align-items: center; background: color-mix(in oklab, var(--journal-gold) 14%, var(--notebook-paper)); }
+.coupon-stub::before, .coupon-stub::after { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; top: -8px; background: var(--journal-deep); }
+.coupon-stub::before { left: -8px; }.coupon-stub::after { right: -8px; }
+.coupon-redeem, .coupon-redeem:hover { color: var(--signature-ink); background: transparent; font-family: var(--font-display); font-size: 1rem; }
+.coupon-stamp { font-weight: 700; color: var(--surprise-stamp); border: 2px solid var(--surprise-stamp); padding: .2rem .5rem; border-radius: 2px; font-size: .8rem; animation: claimed-stamp .5s ease both; }
+@keyframes claimed-stamp { from { transform: translate3d(0,-12px,0) scale(1.5) rotate(-12deg); opacity: 0; } to { transform: translate3d(0,0,0) scale(1) rotate(-6deg); opacity: .9; } }
+.capsule-subtitle { max-width: 350px; margin: 1.5rem auto 0; font-family: var(--font-display); color: var(--gold-soft); font-size: 1.1rem; line-height: 1.6; }
+.capsule-chest, .capsule-chest:hover { position: relative; display: block; height: 200px; width: min(100%, 340px); border-radius: 45% 45% 6px 6px / 18% 18% 6px 6px; margin: 3rem auto 2rem; border: 2px solid var(--journal-gold); background: linear-gradient(135deg, var(--velvet-highlight), var(--journal-wine)); box-shadow: inset 0 0 0 6px var(--journal-deep), inset 0 0 0 7px var(--surprise-border), var(--surprise-shadow); overflow: hidden; padding: 0; }
+.capsule-lid { position: absolute; left: 0; right: 0; top: 0; height: 43%; border-bottom: 3px solid var(--journal-gold); background: repeating-linear-gradient(90deg, transparent 0 7px, color-mix(in oklab, var(--journal-gold) 5%, transparent) 7px 8px); transition: transform .8s; }
+.capsule-band { position: absolute; top: 0; bottom: 0; width: 18px; background: var(--surprise-foil); box-shadow: inset 0 0 0 2px var(--surprise-border); }
+.band-left { left: 16%; }.band-right { right: 16%; }
+.capsule-lock { position: absolute; top: 35%; left: 50%; transform: translateX(-50%); width: 3.5rem; height: 4rem; display: grid; place-items: center; color: var(--journal-wine); background: var(--surprise-foil); border-radius: 8px 8px 20px 20px; box-shadow: var(--surprise-shadow); }
+.capsule-lock svg { width: 1.7rem; height: 1.7rem; }
+.capsule-engraving { position: absolute; bottom: 1rem; left: 0; right: 0; color: var(--journal-gold); font-family: var(--font-display); font-size: .75rem; }
+.capsule-chest.is-open .capsule-lid { transform: translate3d(0,-70px,0); }
+.capsule-countdown { display: grid; grid-template-columns: 1.3fr repeat(3,1fr); gap: .75rem; max-width: 350px; margin: auto; }
+.capsule-countdown span { min-width: 0; border-bottom: 1px solid var(--surprise-border); padding-bottom: .65rem; }
+.capsule-countdown b { display: block; font-size: 1.6rem; font-family: var(--font-display); font-weight: 400; font-variant-numeric: tabular-nums; color: var(--journal-gold); }
+.capsule-countdown small { font-size: .6rem; color: var(--warm); }
+.capsule-hint { min-height: 4.5rem; margin: 1rem auto 0; max-width: 350px; color: var(--gold-soft); font-family: var(--font-display); font-size: 1.15rem; line-height: 1.5; }
+.capsule-letter { max-width: 440px; margin: 2rem auto; padding: 2rem; background: var(--surprise-paper); color: var(--ink); border: 1px solid var(--journal-gold); border-radius: 6px; text-align: left; }
+.capsule-letter h3 { font-size: 1.8rem; }.capsule-letter p { white-space: pre-line; line-height: 1.8; margin-top: 1rem; }
+.memory-compass { position: relative; width: min(100%, 320px); aspect-ratio: 1; border-radius: 50%; margin: 3rem auto 1.5rem; border: 3px solid var(--journal-gold); background: radial-gradient(circle, var(--journal-wine), var(--journal-deep) 65%); box-shadow: inset 0 0 0 5px var(--journal-deep), inset 0 0 0 6px var(--surprise-border), var(--journey-gold-shadow); }
+.compass-ticks { position: absolute; inset: 13px; border-radius: 50%; background: repeating-conic-gradient(var(--journal-gold) 0deg 1deg, transparent 1deg 6deg); mask: radial-gradient(circle, transparent 64%, var(--journal-deep) 65% 69%, transparent 70%); }
+.compass-dial { position: absolute; inset: 12%; width: 76%; height: 76%; fill: var(--journal-gold); stroke: var(--foil-highlight); stroke-width: .6; transition: transform 1.15s cubic-bezier(.2,.8,.3,1); will-change: transform; }
+.compass-dial circle { fill: none; stroke: var(--surprise-border); }.compass-dial .compass-pivot { fill: var(--foil-highlight); }.compass-shade { fill: var(--velvet-highlight); }
+.compass-point, .compass-point:hover { position: absolute; width: 44px; height: 44px; font-family: var(--font-display); font-size: 1.25rem; color: var(--journal-gold); background: var(--journal-deep); border-radius: 50%; padding: 0; }
+.compass-point[aria-pressed="true"] { color: var(--warm); box-shadow: var(--journey-gold-shadow); }
+.point-0 { top: 6px; left: calc(50% - 22px); }.point-1 { right: 6px; top: calc(50% - 22px); }.point-2 { bottom: 6px; left: calc(50% - 22px); }.point-3 { left: 6px; top: calc(50% - 22px); }
+.compass-plaque-slot { min-height: 10rem; width: min(100%,400px); margin: auto; }
+.compass-plaque { border: 1px solid var(--surprise-border); border-radius: 6px; padding: 1.5rem; box-shadow: var(--journey-gold-shadow); background: var(--journey-glass); animation: plaque-bloom .65s ease both; }
+.compass-plaque h3 { font-size: 1.5rem; line-height: 1.35; color: var(--journal-gold); }.compass-plaque p { font-family: var(--font-display); font-size: 1.1rem; color: var(--warm); margin-top: .8rem; }
+@keyframes plaque-bloom { from { opacity: 0; transform: translate3d(0,10px,0); } to { opacity: 1; transform: translate3d(0,0,0); } }
+.story-crest-slot { display: grid; place-items: center; padding: 1rem 0 3rem; }
+.story-secret-crest, .story-secret-crest:hover { width: 5.5rem; height: 5.5rem; border-radius: 50%; padding: 0; border: 1px solid var(--journal-gold); background: var(--journal-wine); box-shadow: inset 0 0 0 4px var(--journal-deep), inset 0 0 0 5px var(--surprise-border), var(--journey-gold-shadow); color: var(--journal-gold); }
+.story-secret-crest span { font-size: 3rem; }
+body:has(.secret-story-modal) [data-slot="dialog-overlay"] { background: var(--secret-dim); backdrop-filter: blur(3px); }
+.secret-story-modal { z-index: 115; width: min(88vw,430px); padding: 3rem 2rem; border: 1px solid var(--journal-gold); border-radius: 8px; background: var(--secret-glass); backdrop-filter: blur(20px); box-shadow: var(--surprise-shadow); color: var(--warm); text-align: center; gap: 1.3rem; }
+.secret-modal-crest { font-size: 3.8rem; color: var(--journal-gold); }.secret-story-modal h2 { font-size: 1.9rem; line-height: 1.25; }.secret-story-message { font-family: var(--font-display); font-size: 1.35rem; line-height: 1.6; color: var(--warm); }.secret-story-signature { font-size: 1.6rem; color: var(--journal-gold); }
+.secret-rose-shower { position: fixed; inset: 0; width: 100vw; height: 100vh; overflow: hidden; pointer-events: none; z-index: 114; }
+.secret-rose-shower i { position: absolute; top: -10vh; width: 18px; height: 25px; border-radius: 75% 15% 65% 30%; background: radial-gradient(ellipse at 25% 20%, var(--rose-glow), var(--velvet-crimson) 50%, var(--journal-wine)); box-shadow: inset 1px 1px 1px var(--rose-glow); animation: secret-petal-fall linear infinite; will-change: transform; }
+@keyframes secret-petal-fall { 0% { transform: translate3d(0,0,0) rotate(-20deg); } 50% { transform: translate3d(var(--petal-wind),65vh,0) rotate(130deg); } 100% { transform: translate3d(0,125vh,0) rotate(280deg); } }
+@media (max-width: 480px) {
+  .coupon-grid { grid-template-columns: 1fr; max-width: 340px; }
+  .love-coupon { min-height: 270px; }.love-coupon h3 { max-width: 230px; }
+  .reason-card { aspect-ratio: 1 / 1.45; }.reason-card .flip-face { padding: .6rem; }.reason-card .flip-back > span { font-size: .86rem; }
+  .scanner-heart-stage { width: 13rem; height: 14rem; }.surprise-section { padding-inline: 1.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heart-is-scanning .scanner-ring, .secret-rose-shower, .scratch-sparks { animation: none; display: none; }
+  .compass-dial, .finale-closing-slot { transition: none; }.coupon-stamp, .compass-plaque, .scratch-keepsake.is-revealed .scratch-polaroid { animation: none; }
+}

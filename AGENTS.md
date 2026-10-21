@@ -25,3 +25,7 @@
 - Reuse the cached ruby geometry and palette across chapter visits and preload browser scene modules at boot; this avoids rebuilding the heart and delays model fetching less.
 - Keep song management in an explicitly opened dialog, not a floating dropdown; this prevents song titles from obscuring chapter headings.
 - Use a cancellable hold-scan hook for automatic constellation reveals; this handles pointer cancellation, keyboard input and hidden tabs consistently.
+- Keep scratch thresholds, future-date locks, coupon links and rapid crest taps in tested browser-safe utilities; this makes surprise rules independently verifiable.
+- Keep the scratch canvas at a fixed backing resolution, sample alpha only at throttled intervals, and support keyboard strips; this bounds touch work and retains accessibility.
+- Keep one journey-level secret dialog listening to crest events, with particles portaled to the body; this supports the same secret across cover and memories without clipping.
+- Reserve the full finale reveal space before interaction; this keeps the QR/footer position stable while text fades in.

@@ -1,123 +1,40 @@
-import { useCallback, useEffect, useState } from "react";
-import { couple, finale, secret } from "@/content/loveStory";
+import { useEffect, useState } from "react";
+import { couple, finale } from "@/content/loveStory";
 import { useReveal } from "@/hooks/useReveal";
 import { say, setMood, walkTo } from "@/lib/companion";
+import { Button } from '@/components/ui/button';
 
 export function Finale() {
   const { ref, shown } = useReveal(0.4);
   const [chosen, setChosen] = useState(false);
   const [forever, setForever] = useState(false);
-  const [typed, setTyped] = useState(false);
-  const [beat, setBeat] = useState(0); // how many of finale.beats are shown
-  const [taps, setTaps] = useState(0);
-  const handleDone = useCallback(() => setTyped(true), []);
-
+  const [beat, setBeat] = useState(0);
   useEffect(() => {
-    if (!typed || beat >= finale.beats.length) return;
-    const t = window.setTimeout(() => setBeat((b) => b + 1), 1100);
-    return () => window.clearTimeout(t);
-  }, [typed, beat]);
-
-  const secretFound = taps >= 3;
+    if (!chosen) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timers = finale.beats.map((_, i) => setTimeout(() => setBeat(i + 1), reduced ? 0 : 1100 * (i + 1)));
+    const mood = setTimeout(() => setMood('present'), 1300);
+    return () => { timers.forEach(clearTimeout); clearTimeout(mood); };
+  }, [chosen]);
+  const complete = chosen && beat >= finale.beats.length;
 
   return (
     <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-7 pb-24 pt-28 text-center">
       <div className="absolute inset-0 bg-halo" aria-hidden="true" />
-      <div ref={ref} className={`relative max-w-sm reveal ${shown ? "reveal-in" : ""}`}>
+      <div ref={ref} className={`finale-content relative w-full max-w-sm reveal ${shown ? "reveal-in" : ""}`}>
         <p className="script text-2xl text-gold-soft">{finale.question}</p>
-
-        {!chosen ? (
-          <button
-            type="button"
-            onClick={() => {
-              setChosen(true);
-              walkTo(0.5, "walk");
-              window.setTimeout(() => setMood("present"), 1300);
-            }}
-            className="btn-love mt-10"
-          >
-            <span className="btn-love-glow" />
-            <span className="relative">Reveal my answer ❤️</span>
-          </button>
-        ) : (
-          <>
-            <div className="relative mt-8">
-              <div className="answer-glow" aria-hidden="true" />
-              {Array.from({ length: 10 }, (_, i) => <span key={i} className="stardust" aria-hidden="true" style={{ left: `${(i * 29) % 100}%`, top: `${(i * 41) % 100}%`, animationDelay: `${(i % 7) * 0.6}s` }} />)}
-              <p className="foil-line relative font-display text-[1.55rem] leading-snug tracking-wide" onAnimationEnd={handleDone}>{finale.answer}</p>
-              <div className="relative mt-6 space-y-2">
-                {finale.beats.slice(0, beat).map((b) => (
-                  <p key={b} className="foil-line font-serif text-[1.1rem] tracking-[0.12em]">{b}</p>
-                ))}
-              </div>
-            </div>
-
-            {beat >= finale.beats.length && (
-              <>
-                <button
-                  type="button"
-                  aria-label="Glowing heart"
-                  onClick={() => setTaps((t) => t + 1)}
-                  className="mx-auto mt-10 block"
-                >
-                  <span className="locked-heart is-unlocking text-6xl">❤</span>
-                </button>
-
-                <p className="animate-rise mt-8 whitespace-pre-line font-display text-[1.2rem] leading-relaxed tracking-[0.06em] text-gradient-love">
-                  {finale.closing}
-                </p>
-
-                {secretFound && (
-                  <div className="glass animate-scale-in mt-8 rounded-3xl px-5 py-6">
-                    <p className="script text-xl text-gold-soft">{secret.found}</p>
-                    <p className="mt-3 font-serif text-[0.95rem] leading-relaxed text-warm/85">
-                      {secret.message}
-                    </p>
-                  </div>
-                )}
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setForever(true);
-                    setMood("present");
-                    say("Forever with you.", 6000);
-                  }}
-                  className={`btn-love mt-12 h-auto w-auto max-w-full whitespace-normal px-9 py-4 text-center leading-snug ${forever ? "btn-forever" : ""}`}
-                >
-                  <span className="btn-love-glow" />
-                  <span className="relative">
-                    {forever ? "Always, and always ❤️" : finale.button}
-                  </span>
-                </button>
-              </>
-            )}
-
-            {forever && (
-              <div className="pointer-events-none fixed inset-0 z-40" aria-hidden="true">
-                {Array.from({ length: 20 }, (_, i) => (
-                  <span
-                    key={i}
-                    className="confetti-heart"
-                    style={{
-                      left: `${(i * 37) % 100}%`,
-                      animationDelay: `${(i % 8) * 0.25}s`,
-                      fontSize: 12 + (i % 5) * 5,
-                    }}
-                  >
-                    ❤
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {typed && (
-              <p className="romantic name-shimmer animate-rise mt-14 text-3xl">
-                {couple.husbandName}
-              </p>
-            )}
-          </>
-        )}
+        <div className="finale-answer-slot mt-8" aria-live="polite">
+          {!chosen && <Button onClick={() => { setChosen(true); walkTo(.5, 'walk'); }} className="btn-love finale-reveal-button"><span className="btn-love-glow" /><span className="relative">Reveal my answer ❤️</span></Button>}
+          {chosen && <><div className="answer-glow" aria-hidden="true" />{Array.from({ length: 10 }, (_, i) => <span key={i} className="stardust" aria-hidden="true" style={{ left: `${(i * 29) % 100}%`, top: `${(i * 41) % 100}%`, animationDelay: `${i % 7 * .6}s` }} />)}</>}
+          <p className={chosen ? 'foil-line font-display text-[1.55rem] leading-snug' : 'invisible font-display text-[1.55rem] leading-snug'}>{finale.answer}</p>
+          <div className="relative mt-6 space-y-2">{finale.beats.map((b, i) => <p key={b} className={chosen && beat > i ? 'foil-line font-serif text-lg' : 'invisible font-serif text-lg'}>{b}</p>)}</div>
+        </div>
+        <div className={`finale-closing-slot ${complete ? 'is-visible' : ''}`} aria-hidden={!complete}>
+          <span className="locked-heart text-6xl" aria-hidden="true">❤</span>
+          <p className="mt-8 whitespace-pre-line font-display text-xl leading-relaxed text-gradient-love">{finale.closing}</p>
+          <Button disabled={!complete} onClick={() => { setForever(true); setMood('present'); say('Forever with you.', 6000); }} className={`btn-love mt-10 h-auto max-w-full whitespace-normal px-9 py-4 leading-snug ${forever ? 'btn-forever' : ''}`}><span className="btn-love-glow" /><span className="relative">{forever ? 'Always, and always ❤️' : finale.button}</span></Button>
+          <p className="romantic name-shimmer mt-12 text-3xl">{couple.husbandName}</p>
+        </div>
       </div>
     </section>
   );
