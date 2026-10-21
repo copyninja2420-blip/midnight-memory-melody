@@ -1675,6 +1675,7 @@ body, .diary-book { background: var(--journal-velvet); }
 .scanner-heart-stage .scanner-ring-2 { inset: 1.8rem 1.8rem 2.8rem; }
 .scanner-heart-stage .scanner-ruby { inset: .1rem 0 1rem; }
 .scanner-heart-stage .scanner-ecg { position: absolute; bottom: -.4rem; left: 50%; transform: translateX(-50%); width: min(85vw, 21rem); height: 2.2rem; z-index: 1; }
+.scanner-pad > svg:not(.scanner-progress) { width: 3rem; height: 3rem; }
 .heart-is-scanning .scanner-ring { animation: centered-heart-pulse var(--beat-speed) ease-out infinite; }
 .heart-is-scanning .scanner-ring-2 { animation-delay: .2s; }
 @keyframes centered-heart-pulse { 0%,100% { transform: scale(1); opacity: .5; } 25% { transform: scale(var(--pulse-scale)); opacity: 1; } }
@@ -1706,7 +1707,8 @@ body, .diary-book { background: var(--journal-velvet); }
 .scratch-keepsake canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; cursor: crosshair; }
 .scratch-keepsake.is-revealed .scratch-polaroid { animation: plaque-bloom .7s ease both; }
 .scratch-sparks { position: absolute; pointer-events: none; z-index: 2; }
-.scratch-sparks i { position: absolute; color: var(--foil-highlight); font-style: normal; font-size: .8rem; text-shadow: var(--journey-gold-shadow); transform: rotate(calc(var(--spark-index) * 60deg)) translate3d(0,-22px,0); }
+.scratch-sparks i { position: absolute; color: var(--foil-highlight); font-style: normal; font-size: .8rem; text-shadow: var(--journey-gold-shadow); animation: scratch-spark-flight .5s ease-out infinite; will-change: transform, opacity; }
+@keyframes scratch-spark-flight { from { transform: rotate(calc(var(--spark-index) * 60deg)) translate3d(0,-8px,0); opacity: 1; } to { transform: rotate(calc(var(--spark-index) * 60deg)) translate3d(0,-32px,0); opacity: 0; } }
 .coupon-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.5rem; max-width: 660px; margin: 2.5rem auto 0; }
 .love-coupon { position: relative; display: flex; flex-direction: column; align-items: center; min-height: 285px; border: 1px solid var(--journal-gold); border-radius: 6px; background: var(--surprise-paper); box-shadow: var(--surprise-shadow); color: var(--ink); padding: 1.25rem 1.2rem 0; overflow: hidden; }
 .love-coupon::before { content: ''; position: absolute; inset: .35rem; border: 1px solid color-mix(in oklab, var(--journal-gold) 65%, transparent); pointer-events: none; }

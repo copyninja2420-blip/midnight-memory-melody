@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { letter } from "@/content/loveStory";
 import { say, setMood, walkTo } from "@/lib/companion";
 import { useReveal } from "@/hooks/useReveal";
@@ -14,6 +14,8 @@ export function LoveLetter() {
   const [open, setOpen] = useState(false);
   const [typed, setTyped] = useState(false);
   const [burst, setBurst] = useState<BurstHeart[]>([]);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
   const { ref, shown } = useReveal(0.25);
   const handleDone = useCallback(() => setTyped(true), []);
 
@@ -22,10 +24,10 @@ export function LoveLetter() {
     playPageTurn();
     setOpen(true);
     walkTo(0.14, "walk");
-    window.setTimeout(() => {
+    timers.current.push(setTimeout(() => {
       setMood("read");
       say("Read every word… I meant all of it ❤️", 5200);
-    }, 1200);
+    }, 1200));
     setBurst(
       Array.from({ length: 20 }, () => ({
         left: Math.random() * 100,
@@ -34,7 +36,7 @@ export function LoveLetter() {
         duration: 2.4 + Math.random() * 1.8,
       })),
     );
-    window.setTimeout(() => setBurst([]), 4800);
+    timers.current.push(setTimeout(() => setBurst([]), 4800));
   };
 
   return (
