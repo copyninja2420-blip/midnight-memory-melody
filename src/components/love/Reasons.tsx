@@ -2,17 +2,18 @@ import { useState } from "react";
 import { reasons } from "@/content/loveStory";
 import { useReveal } from "@/hooks/useReveal";
 import { SectionTitle } from "./SectionTitle";
+import { Button } from '@/components/ui/button';
 
 function ReasonCard({ index }: { index: number }) {
   const [flipped, setFlipped] = useState(false);
   const { ref, shown } = useReveal(0.15);
 
   return (
-    <button
+    <Button variant="ghost"
       ref={ref as React.Ref<HTMLButtonElement>}
       type="button"
       onClick={() => setFlipped((f) => !f)}
-      className={`flip-card reveal ${shown ? "reveal-in" : ""}`}
+      className={`flip-card reason-card reveal ${shown ? "reveal-in" : ""}`}
       style={{ transitionDelay: `${(index % 6) * 70}ms` }}
       aria-pressed={flipped}
     >
@@ -24,12 +25,12 @@ function ReasonCard({ index }: { index: number }) {
           </span>
         </span>
         <span className="flip-face flip-back">
-          <span className="font-serif text-[clamp(0.68rem,2.7vw,0.82rem)] font-semibold leading-snug text-warm">
+          <span className="font-serif text-sm font-semibold leading-snug text-warm">
             {reasons[index]}
           </span>
         </span>
       </span>
-    </button>
+    </Button>
   );
 }
 

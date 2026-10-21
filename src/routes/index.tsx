@@ -24,6 +24,11 @@ import { LoveTimer } from "@/components/love/LoveTimer";
 import { DestinyNotebook } from "@/components/love/DestinyNotebook";
 import { playPageTurn, preloadStorySounds } from "@/lib/storySounds";
 import { RomanticKeepsakes } from "@/components/love/RomanticKeepsakes";
+import { ScratchNote } from '@/components/love/ScratchNote';
+import { LoveCoupons } from '@/components/love/LoveCoupons';
+import { TimeCapsule } from '@/components/love/TimeCapsule';
+import { MemoryCompass } from '@/components/love/MemoryCompass';
+import { JourneySecret, SecretCrest } from '@/components/love/SecretCrest';
 
 const PageCurl = lazy(() => import("@/components/love/PageCurl"));
 
@@ -97,6 +102,7 @@ function LoveStoryPage() {
     <main className="diary-book relative min-h-[100svh] overflow-x-hidden bg-background text-foreground" data-journey={stage}>
       {/* One music player for the whole visit — starts on unlock, never restarts */}
       <MusicToggle autoplay />
+      <JourneySecret />
       {stage !== 'story' && <Atmosphere particles={8} hearts={3} />}
       <div className="journal-corners" aria-hidden="true"><span>❧</span><span>❧</span><span>❧</span><span>❧</span></div>
 
@@ -129,10 +135,15 @@ function LoveStoryPage() {
             <Timeline />
             <Reasons />
             <Gallery />
+            <ScratchNote />
             <GiftVault />
+            <LoveCoupons />
+            <TimeCapsule />
+            <MemoryCompass />
             <RomanticKeepsakes />
             <LoveLetter />
             <Finale />
+            <div className="story-crest-slot"><SecretCrest /></div>
             <SecretGateway />
             <WhatsAppReaction />
           </div>

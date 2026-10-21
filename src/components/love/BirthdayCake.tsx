@@ -65,7 +65,9 @@ export function BirthdayCake({ onEnter }: { onEnter: () => void }) {
 
 function GoldenKnife({ onCut, label }: { onCut: () => void; label: string }) {
   const start = useRef<number | null>(null);
+  const cut = useRef(false);
   const [drop, setDrop] = useState(0);
+  const finish = () => { if (cut.current) return; cut.current = true; start.current = null; onCut(); };
   return (
     <div className="flex flex-col items-center gap-2">
       <Button variant="ghost"
@@ -75,8 +77,9 @@ function GoldenKnife({ onCut, label }: { onCut: () => void; label: string }) {
         style={{ transform: `translateY(${drop}px) rotate(-8deg)` }}
         onPointerDown={(e) => { start.current = e.clientY; e.currentTarget.setPointerCapture(e.pointerId); }}
         onPointerMove={(e) => { if (start.current !== null) setDrop(Math.max(0, Math.min(90, e.clientY - start.current))); }}
-        onPointerUp={() => { start.current = null; onCut(); }}
-        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onCut(); } }}
+        onPointerUp={finish}
+        onPointerCancel={() => { start.current = null; setDrop(0); }}
+        onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !e.repeat) { e.preventDefault(); finish(); } }}
       >
         <span className="golden-knife-blade" /><span className="golden-knife-handle" />
       </Button>
