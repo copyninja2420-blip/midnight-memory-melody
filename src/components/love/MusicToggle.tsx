@@ -179,7 +179,7 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
             ) : (
               <Play className="size-4" />
             )}
-            <span className="max-w-[10rem] truncate text-[0.7rem]">
+            <span className="max-w-[8rem] truncate text-[0.7rem]">
               {track ? track.title : "Add your songs ♪"}
             </span>
           </Button>
@@ -190,7 +190,7 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
             title="Next song"
             variant="ghost"
             size="icon"
-            className="size-7 text-inherit opacity-70 hover:bg-transparent hover:text-inherit hover:opacity-100"
+            className="size-7 shrink-0 text-inherit opacity-70 hover:bg-transparent hover:text-inherit hover:opacity-100"
           >
             <SkipForward className="size-4" />
           </Button>

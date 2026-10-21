@@ -32,7 +32,7 @@ function Ruby({ color, light, progress, active }: { color: string; light: string
     if (!mesh.current) return;
     const phase = time.current * (active ? 5 + progress * .05 : 3);
     const beat = Math.pow(Math.max(0, Math.sin(phase)), 8);
-    mesh.current.scale.setScalar(1 + beat * .08);
+    mesh.current.scale.setScalar(1 + beat * (.06 + progress * .0012));
     mesh.current.rotation.y = Math.sin(time.current * .55) * .35;
     if (core.current) core.current.intensity = 2 + beat * 6 + progress * .04;
     if (mat.current) mat.current.emissiveIntensity = .18 + beat * .35 + progress * .004;

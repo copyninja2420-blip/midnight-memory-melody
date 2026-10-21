@@ -3,6 +3,7 @@ import { LockKeyhole } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { journal } from "@/content/loveStory";
 import { startMusicFromGesture } from "@/lib/musicUnlock";
+import { SecretCrest } from '@/components/love/SecretCrest';
 
 export default function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   const [digits, setDigits] = useState(["", "", "", ""]);
@@ -45,7 +46,7 @@ export default function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
         <div className="cover-flourish" aria-hidden="true">❧</div>
         <h1 id="cover-title" className="romantic text-6xl leading-tight text-gold-soft sm:text-7xl">{journal.title}</h1>
         <p className="script mt-5 text-2xl text-warm/75">Every page, a little closer to forever.</p>
-        <div className="cover-medallion" aria-hidden="true"><span className="romantic">{journal.crest}</span><span className="medallion-leaves">❦</span></div>
+        <SecretCrest className="cover-medallion" />
         <form onSubmit={(e) => { e.preventDefault(); unlock(digits.join("")); }}>
           <label className="mb-5 block font-display text-sm text-gold-soft/80">The key to our story</label>
           <div className="passcode-boxes">

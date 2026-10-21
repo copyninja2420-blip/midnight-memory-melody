@@ -26,10 +26,12 @@ export function MoreSurprises() {
               key={i}
               style={{
                 left: `${(i * 23) % 100}%`,
-                fontSize: 14 + (i % 6) * 5,
+                 fontSize: [12, 22, 34][i % 3],
+                 '--heart-wind': `${i % 2 ? 26 : -32}px`,
+                 '--heart-depth-opacity': [.45, .7, .9][i % 3],
                 animationDelay: `${-i * .31}s`,
                 animationDuration: `${4.5 + (i % 5) * 0.8}s`,
-              }}
+               } as React.CSSProperties}
             >
               {i % 5 === 0 ? "✦" : "♥"}
             </span>
