@@ -73,5 +73,5 @@ function CurlSheet({ title }: { title: string }) {
 }
 
 export default function PageCurl({ title }: { title: string }) {
-  return <div className="page-curl-overlay" aria-hidden="true"><Canvas orthographic dpr={1} camera={{ position: [0, 0, 12], zoom: 100 }} gl={{ alpha: true }}><ambientLight intensity={1.6} /><directionalLight position={[3, 1, 8]} intensity={2} /><CurlSheet title={title} /></Canvas></div>;
+  return <div className="page-curl-overlay" aria-hidden="true"><div className="page-curl-underlay" /><Canvas orthographic dpr={1} camera={{ position: [0, 0, 12], zoom: 100 }} gl={{ alpha: true }}><ambientLight intensity={1.6} /><directionalLight position={[3, 1, 8]} intensity={2} /><CurlSheet title={title} /></Canvas></div>;
 }
