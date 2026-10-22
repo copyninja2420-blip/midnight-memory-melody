@@ -1767,3 +1767,173 @@ body:has(.secret-story-modal) [data-slot="dialog-overlay"] { background: var(--s
   .heart-is-scanning .scanner-ring, .secret-rose-shower, .scratch-sparks { animation: none; display: none; }
   .compass-dial, .finale-closing-slot { transition: none; }.coupon-stamp, .compass-plaque, .scratch-keepsake.is-revealed .scratch-polaroid { animation: none; }
 }
+
+/* ── Master expansion: scratch gallery, two hearts, cassette, jar, mirror, hug ── */
+.page-curl-underlay {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 0%, oklch(0.32 0.09 15 / 0.9), transparent 60%),
+    linear-gradient(160deg, oklch(0.22 0.07 12), oklch(0.16 0.05 10) 55%, oklch(0.12 0.04 8));
+  box-shadow: inset 0 0 120px oklch(0.08 0.03 10 / 0.9);
+}
+.page-curl-overlay canvas { position: relative; }
+
+.scratch-memory { position: relative; text-align: center; }
+.scratch-memory-badge {
+  display: inline-block; margin-bottom: 0.6rem; padding: 0.3rem 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--journal-gold) 55%, transparent);
+  border-radius: 999px; font-family: var(--font-display, serif); font-size: 0.62rem;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-soft, var(--journal-gold));
+  background: color-mix(in oklab, var(--journal-wine) 55%, transparent);
+}
+.scratch-memory-frame {
+  position: relative; aspect-ratio: 5 / 6; overflow: hidden; border-radius: 0.75rem;
+  border: 2px solid color-mix(in oklab, var(--journal-gold) 65%, transparent);
+  box-shadow: 0 14px 34px -14px oklch(0.1 0.05 12 / 0.8), inset 0 0 0 4px oklch(0.94 0.03 90 / 0.12);
+  background: var(--notebook-paper, #f5ecd7);
+  transform: translate3d(0, 0, 0);
+}
+.scratch-memory-frame.is-revealed { box-shadow: 0 0 34px -4px color-mix(in oklab, var(--journal-gold) 55%, transparent), 0 14px 34px -14px oklch(0.1 0.05 12 / 0.8); }
+.scratch-memory-photo { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: pointer; }
+.scratch-memory-photo:disabled { cursor: default; }
+.scratch-memory-photo img { width: 100%; height: 100%; object-fit: cover; }
+.scratch-memory-foil, .mirror-fog {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  touch-action: none; cursor: crosshair; will-change: transform; transform: translate3d(0, 0, 0);
+}
+.scratch-revealed-badge {
+  position: absolute; top: 0.6rem; right: 0.6rem; padding: 0.28rem 0.7rem; border-radius: 999px;
+  background: color-mix(in oklab, var(--journal-wine) 88%, black); color: var(--foil-highlight, #ffe9a8);
+  border: 1px solid color-mix(in oklab, var(--journal-gold) 70%, transparent);
+  font-family: var(--font-display, serif); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  animation: claimed-stamp 0.5s ease both;
+}
+.scratch-burst { position: absolute; inset: 0; pointer-events: none; }
+.scratch-burst i {
+  position: absolute; left: 50%; top: 50%; color: var(--foil-highlight, #ffe9a8);
+  font-style: normal; font-size: 1.1rem; opacity: 0;
+  animation: scratch-spark-flight 1s ease-out forwards;
+  animation-delay: calc(var(--spark-index) * 40ms);
+}
+.scratch-memory-caption { margin-top: 0.8rem; font-size: 1.15rem; line-height: 1.35; color: var(--gold-soft, var(--journal-gold)); }
+
+/* Two hearts dual-thumb sync */
+.two-hearts { position: relative; display: flex; align-items: center; justify-content: space-between; max-width: 22rem; margin: 2.5rem auto 0; padding: 0 0.5rem; }
+.heart-pad {
+  position: relative; z-index: 2; display: grid; place-items: center; width: 5.5rem; height: 5.5rem; border-radius: 999px;
+  border: 2px solid color-mix(in oklab, var(--journal-gold) 65%, transparent);
+  background: radial-gradient(circle at 35% 30%, color-mix(in oklab, var(--journal-gold) 30%, transparent), color-mix(in oklab, var(--journal-wine) 80%, black));
+  color: var(--foil-highlight, #ffe9a8); touch-action: none; cursor: pointer;
+  box-shadow: 0 0 22px -4px color-mix(in oklab, var(--journal-gold) 45%, transparent);
+  transition: transform 0.2s ease; transform: translate3d(0, 0, 0);
+}
+.heart-pad:active { transform: scale(0.94); }
+.infinity-link { position: absolute; left: 50%; top: 50%; width: 78%; transform: translate(-50%, -50%); z-index: 1; overflow: visible; }
+.infinity-path {
+  fill: none; stroke: var(--journal-gold); stroke-width: 3; stroke-linecap: round;
+  stroke-dasharray: 100; filter: drop-shadow(0 0 6px color-mix(in oklab, var(--journal-gold) 80%, transparent));
+  transition: stroke-dashoffset 0.12s linear;
+}
+.two-hearts.is-done .heart-pad { animation: centered-heart-pulse 1.6s ease-in-out infinite; }
+
+/* Cassette */
+.cassette {
+  position: relative; display: block; width: min(20rem, 86vw); margin: 2.5rem auto 0; padding: 1rem 1.1rem 1.4rem;
+  border-radius: 0.9rem; cursor: pointer;
+  border: 2px solid color-mix(in oklab, var(--journal-gold) 60%, transparent);
+  background: linear-gradient(165deg, oklch(0.3 0.08 14), oklch(0.2 0.06 10) 60%, oklch(0.16 0.05 8));
+  box-shadow: 0 16px 36px -16px oklch(0.08 0.04 10 / 0.9), inset 0 1px 0 oklch(0.6 0.1 60 / 0.35);
+  transform: translate3d(0, 0, 0); transition: transform 0.25s ease;
+}
+.cassette:active { transform: scale(0.98); }
+.cassette-label { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.55rem 0.8rem; border-radius: 0.5rem;
+  background: linear-gradient(180deg, var(--notebook-paper, #f5ecd7), oklch(0.88 0.04 85)); color: oklch(0.35 0.08 15); }
+.cassette-title { font-size: 1.5rem; }
+.cassette-side { font-family: var(--font-display, serif); font-size: 0.55rem; letter-spacing: 0.3em; }
+.cassette-window { display: flex; align-items: center; justify-content: space-between; margin-top: 0.85rem; padding: 0.5rem 1.4rem;
+  border-radius: 0.5rem; background: oklch(0.12 0.03 10 / 0.85); border: 1px solid oklch(0.5 0.08 50 / 0.4); }
+.cassette-spool { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 3px dashed var(--journal-gold); background: oklch(0.2 0.05 12); }
+.cassette.is-playing .cassette-spool { animation: spool-spin 1.4s linear infinite; }
+.cassette-tape { flex: 1; height: 2px; margin: 0 0.6rem; background: oklch(0.55 0.08 40 / 0.7); }
+.cassette-screws i { position: absolute; width: 6px; height: 6px; border-radius: 999px; background: oklch(0.6 0.1 60 / 0.7); }
+.cassette-screws i:nth-child(1) { top: 6px; left: 6px; } .cassette-screws i:nth-child(2) { top: 6px; right: 6px; }
+.cassette-screws i:nth-child(3) { bottom: 6px; left: 6px; } .cassette-screws i:nth-child(4) { bottom: 6px; right: 6px; }
+@keyframes spool-spin { to { transform: rotate(360deg); } }
+.cassette-lyric-slot { min-height: 0; overflow: hidden; }
+.cassette-lyric {
+  margin: 1.4rem auto 0; max-width: 20rem; padding: 1.2rem 1.4rem; border-radius: 0.75rem; text-align: center;
+  border: 1px solid color-mix(in oklab, var(--journal-gold) 55%, transparent);
+  background: linear-gradient(180deg, var(--notebook-paper, #f5ecd7), oklch(0.9 0.04 85)); color: oklch(0.32 0.07 15);
+  animation: plaque-bloom 0.6s ease both;
+}
+.cassette-lyric .script { font-size: 1.3rem; line-height: 1.4; }
+.cassette-track { font-family: var(--font-display, serif); font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 0.4rem; }
+
+/* Wishing jar */
+.wishing-jar { position: relative; width: 11rem; height: 14rem; margin: 2.5rem auto 0; }
+.jar-glass {
+  position: absolute; inset: 2.2rem 0 0; border-radius: 2.4rem 2.4rem 3rem 3rem / 2rem 2rem 3.4rem 3.4rem;
+  border: 2px solid color-mix(in oklab, var(--journal-gold) 55%, transparent);
+  background: linear-gradient(170deg, oklch(0.9 0.03 90 / 0.14), oklch(0.7 0.05 80 / 0.08));
+  box-shadow: inset 0 0 30px oklch(0.9 0.04 90 / 0.12), 0 16px 34px -16px oklch(0.08 0.04 10 / 0.9);
+  overflow: hidden;
+}
+.jar-scroll { position: absolute; width: 2.4rem; height: 0.7rem; border-radius: 999px;
+  background: linear-gradient(90deg, oklch(0.92 0.04 88), var(--journal-gold)); box-shadow: 0 0 8px color-mix(in oklab, var(--journal-gold) 60%, transparent); }
+.jar-cork {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4.4rem; height: 2.6rem; z-index: 2;
+  border-radius: 0.6rem 0.6rem 1rem 1rem; cursor: pointer;
+  border: 2px solid color-mix(in oklab, var(--journal-gold) 60%, transparent);
+  background: linear-gradient(180deg, oklch(0.55 0.09 55), oklch(0.4 0.07 40));
+  transition: transform 0.2s ease;
+}
+.jar-cork:active { transform: translateX(-50%) translateY(-4px); }
+.jar-scroll-slot { min-height: 6.5rem; margin-top: 1.6rem; display: grid; place-items: center; }
+.jar-paper {
+  max-width: 20rem; padding: 1.1rem 1.5rem; border-radius: 0.4rem; text-align: center;
+  background: linear-gradient(180deg, var(--notebook-paper, #f5ecd7), oklch(0.9 0.04 85)); color: oklch(0.32 0.07 15);
+  border: 1px solid color-mix(in oklab, var(--journal-gold) 50%, transparent);
+  box-shadow: 0 12px 26px -12px oklch(0.1 0.05 12 / 0.7);
+  animation: plaque-bloom 0.55s ease both;
+}
+.jar-paper .script { font-size: 1.35rem; line-height: 1.4; }
+
+/* Foggy mirror */
+.foggy-mirror {
+  position: relative; width: min(20rem, 86vw); aspect-ratio: 5 / 6; margin: 2.5rem auto 0; overflow: hidden;
+  border-radius: 1.2rem; border: 6px solid color-mix(in oklab, var(--journal-gold) 65%, transparent);
+  box-shadow: 0 0 0 2px oklch(0.2 0.06 12), 0 20px 44px -18px oklch(0.08 0.04 10 / 0.95);
+  background: var(--notebook-paper, #f5ecd7); transform: translate3d(0, 0, 0);
+}
+.foggy-mirror.is-revealed { box-shadow: 0 0 38px -6px color-mix(in oklab, var(--journal-gold) 55%, transparent), 0 20px 44px -18px oklch(0.08 0.04 10 / 0.95); }
+.mirror-photo { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.mirror-photo img { flex: 1; min-height: 0; width: 100%; object-fit: cover; }
+.mirror-photo .script { padding: 0.7rem 0.8rem; font-size: 1.2rem; text-align: center; color: oklch(0.35 0.08 15); background: var(--notebook-paper, #f5ecd7); }
+
+/* Instant hug */
+.instant-hug-wrap { display: flex; justify-content: center; padding: 0.5rem 1.5rem 3rem; }
+.instant-hug {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.9rem 1.8rem;
+  border-radius: 999px; font-family: var(--font-display, serif); font-size: 0.95rem; letter-spacing: 0.04em;
+  color: var(--foil-highlight, #ffe9a8); text-decoration: none;
+  border: 1px solid color-mix(in oklab, var(--journal-gold) 65%, transparent);
+  background: linear-gradient(160deg, oklch(0.34 0.09 14), oklch(0.24 0.07 10));
+  box-shadow: 0 0 26px -6px color-mix(in oklab, var(--journal-gold) 55%, transparent), 0 14px 30px -14px oklch(0.08 0.04 10 / 0.9);
+  transition: transform 0.2s ease; transform: translate3d(0, 0, 0);
+}
+.instant-hug:active { transform: scale(0.95); }
+.hug-hearts { position: fixed; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
+.hug-hearts i {
+  position: absolute; bottom: -2rem; font-style: normal; color: var(--rose-glow, #e35d7c);
+  opacity: 0; will-change: transform; animation: hug-heart-rise 2.6s ease-out forwards;
+}
+@keyframes hug-heart-rise {
+  0% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translate3d(0, -108vh, 0) scale(1.15); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cassette.is-playing .cassette-spool, .two-hearts.is-done .heart-pad { animation: none; }
+  .hug-hearts i, .scratch-burst i { animation-duration: 0.01s; }
+}

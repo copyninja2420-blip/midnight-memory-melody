@@ -4,10 +4,10 @@ import { playMechanicalTick } from '@/lib/storySounds';
 import { SectionTitle } from './SectionTitle';
 
 const PLACES = [
-  { point: 'North', symbol: 'N', title: 'Where We First Spoke', note: 'Your voice. The beginning of my favorite story.' },
-  { point: 'East', symbol: 'E', title: 'Where We Shared Our First Tea', note: 'A little warmth, a little sweetness, and you.' },
-  { point: 'South', symbol: 'S', title: 'The Moment I Knew You Were The One', note: 'Every direction my heart takes leads back to you.' },
-  { point: 'West', symbol: 'W', title: 'Where We Will Build Our Forever', note: 'Not just a place. A home, with you.' },
+  { point: 'North', symbol: 'N', title: 'Our School — Where It All Began', note: 'The unforgettable place where our eyes first met, and where the first chapter of our forever quietly started.' },
+  { point: 'East', symbol: 'E', title: 'Malaikottai (Rockfort) — Our Very First Date', note: 'High above the city breeze, standing together for our first date, where my heart knew you were my home.' },
+  { point: 'South', symbol: 'S', title: 'LA Cinemas — Our First Movie Date', note: 'Side by side in the dark theatre, our hands finding each other for the first time amidst the movie scenes.' },
+  { point: 'West', symbol: 'W', title: 'Kallanai Dam — Our Distant Journey', note: 'The scenic long drive across the river waters — our first distant escape together where time simply stood still.' },
 ];
 export function MemoryCompass() {
   const [active, setActive] = useState<number | null>(null);

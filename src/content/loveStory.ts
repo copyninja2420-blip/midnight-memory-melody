@@ -267,3 +267,58 @@ export const whatsappReaction = {
   message:
     "I just finished reading your surprise... and I don't even have words. I love you so much! ❤️🥹",
 };
+
+/** Chapter 7 scratch-to-reveal memory cards. */
+export type ScratchMemory = { numeral: string; title: string; caption: string; image?: string };
+export const scratchMemories: ScratchMemory[] = [
+  { numeral: "I", title: "Our School", caption: "Where our eyes first met and our story quietly began", image: photoUs1.url },
+  { numeral: "II", title: "Malaikottai Rockfort", caption: "Our very first date high above the city", image: photoUs5.url },
+  { numeral: "III", title: "LA Cinemas", caption: "Hands intertwined in the dark, our first movie date", image: photoUs3.url },
+  { numeral: "IV", title: "Kallanai Dam", caption: "The long scenic journey where forever felt real", image: photoUs4.url },
+];
+
+/** "Our Song" retro cassette keepsake. */
+export const ourSong = {
+  track: "Inayae",
+  lyric: "Every time this melody plays, in my mind, I'm holding you.",
+};
+
+/** Wishing jar — a reason for every day. */
+export const jarReasons: string[] = [
+  "Your smile makes my whole day brighter.",
+  "The way you laugh at my worst jokes.",
+  "You understand me without a single word.",
+  "Your hand fits mine like it was made for it.",
+  "You make ordinary moments feel magical.",
+  "The way you care for everyone around you.",
+  "Your voice is my favorite sound.",
+  "You believe in me even when I don't.",
+  "The way your eyes light up when you're happy.",
+  "You turn every place into home.",
+  "Your courage inspires me every day.",
+  "The little things you remember about me.",
+  "You make forever feel too short.",
+  "Your hugs fix everything.",
+  "The way you say my name.",
+  "You are my calm in every storm.",
+  "Your kindness, even on hard days.",
+  "The way you dance when nobody watches.",
+  "You make me want to be better.",
+  "Your late-night talks that heal everything.",
+  "The way you steal my food and my heart.",
+  "You are my favorite hello and hardest goodbye.",
+  "Your determination when you want something.",
+  "The way you scrunch your nose when you smile.",
+  "You make distance feel like nothing.",
+  "Your faith in us, always.",
+  "The way you love your family.",
+  "You are my best friend and my greatest love.",
+  "Every version of you, in every lifetime.",
+  "Simply — because you are you.",
+];
+
+/** Footer quick action. */
+export const instantHug = {
+  label: "Send Me an Instant Hug 🤗",
+  message: "I just reached the end of our storybook... and I need a real hug from you right now. ❤️",
+};
