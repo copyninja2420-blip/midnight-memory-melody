@@ -11,6 +11,12 @@ export const COUPONS = [
 export function scratchRevealed(cleared: number, total: number) {
   return total > 0 && cleared / total >= SCRATCH_REVEAL_RATIO;
 }
+export function dissolveRevealed(cleared: number, total: number) {
+  return total > 0 && cleared / total >= SCRATCH_DISSOLVE_RATIO;
+}
+export function pickJarReason(pool: readonly string[], index: number) {
+  return pool[((index % pool.length) + pool.length) % pool.length] ?? '';
+}
 export function capsuleUnlocked(now: number) {
   return now >= Date.parse(ROMANTIC_TARGET_DATE);
 }
