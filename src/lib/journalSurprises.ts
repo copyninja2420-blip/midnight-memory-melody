@@ -1,6 +1,7 @@
 import { ROMANTIC_TARGET_DATE } from './romanticCountdown';
 
 export const SCRATCH_REVEAL_RATIO = 0.6;
+export const SCRATCH_DISSOLVE_RATIO = 0.5;
 export const COUPONS = [
   'One Long Midnight Drive With No Destination',
   'Instant Win In Any Argument (No Questions Asked)',
