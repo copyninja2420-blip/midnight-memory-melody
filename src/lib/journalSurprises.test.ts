@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { capsuleUnlocked, COUPONS, couponWhatsAppUrl, rapidCrestTaps, scratchRevealed } from './journalSurprises';
+import { capsuleUnlocked, COUPONS, couponWhatsAppUrl, dissolveRevealed, pickJarReason, rapidCrestTaps, scratchRevealed } from './journalSurprises';
 describe('journal surprise rules', () => {
   it('reveals the foil only when at least 60 percent is cleared', () => {
     assert.equal(scratchRevealed(59, 100), false);
@@ -22,5 +22,17 @@ describe('journal surprise rules', () => {
   it('requires three crest taps within 900ms', () => {
     assert.equal(rapidCrestTaps([100, 400], 800).length, 3);
     assert.equal(rapidCrestTaps([100, 400], 1100).length, 2);
+  });
+  it('dissolves scratch-card foil once half is cleared', () => {
+    assert.equal(dissolveRevealed(49, 100), false);
+    assert.equal(dissolveRevealed(50, 100), true);
+    assert.equal(dissolveRevealed(0, 0), false);
+  });
+  it('always picks a valid wishing-jar reason', () => {
+    const pool = ['a', 'b', 'c'];
+    assert.equal(pickJarReason(pool, 0), 'a');
+    assert.equal(pickJarReason(pool, 4), 'b');
+    assert.equal(pickJarReason(pool, -1), 'c');
+    assert.equal(pickJarReason([], 3), '');
   });
 });
