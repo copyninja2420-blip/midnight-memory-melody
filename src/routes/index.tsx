@@ -6,7 +6,7 @@ import { journal } from "@/content/loveStory";
 import { Atmosphere } from "@/components/love/Atmosphere";
 import { LoveMeterScreen } from "@/components/love/LoveMeterScreen";
 import { Finale } from "@/components/love/Finale";
-import { Gallery } from "@/components/love/Gallery";
+import { ScratchGallery } from "@/components/love/ScratchGallery";
 import { HeartTap } from "@/components/love/HeartTap";
 import { LoveLetter } from "@/components/love/LoveLetter";
 import { MusicToggle } from "@/components/love/MusicToggle";
@@ -29,6 +29,12 @@ import { LoveCoupons } from '@/components/love/LoveCoupons';
 import { TimeCapsule } from '@/components/love/TimeCapsule';
 import { MemoryCompass } from '@/components/love/MemoryCompass';
 import { JourneySecret, SecretCrest } from '@/components/love/SecretCrest';
+import { TwoHearts } from '@/components/love/TwoHearts';
+import { CassettePlayer } from '@/components/love/CassettePlayer';
+import { WishingJar } from '@/components/love/WishingJar';
+import { FoggyMirror } from '@/components/love/FoggyMirror';
+import { InstantHug } from '@/components/love/InstantHug';
+import { useWakeLock } from '@/hooks/useWakeLock';
 
 const PageCurl = lazy(() => import("@/components/love/PageCurl"));
 
@@ -97,6 +103,7 @@ function LoveStoryPage() {
     return () => clearTimeout(failsafe);
   }, [turning]);
   useEffect(() => { window.scrollTo({ top: 0, behavior: "instant" }); }, [stage]);
+  useWakeLock(stage === "story");
 
   return (
     <main className="diary-book relative min-h-[100svh] overflow-x-hidden bg-background text-foreground" data-journey={stage}>
@@ -134,18 +141,23 @@ function LoveStoryPage() {
             <LoveTimer />
             <Timeline />
             <Reasons />
-            <Gallery />
+            <ScratchGallery />
             <ScratchNote />
             <GiftVault />
             <LoveCoupons />
             <TimeCapsule />
             <MemoryCompass />
             <RomanticKeepsakes />
+            <CassettePlayer />
+            <WishingJar />
+            <FoggyMirror />
+            <TwoHearts />
             <LoveLetter />
             <Finale />
             <div className="story-crest-slot"><SecretCrest /></div>
             <SecretGateway />
             <WhatsAppReaction />
+            <InstantHug />
           </div>
         </div>
       )}
