@@ -137,7 +137,7 @@ function LoveStoryPage() {
       {stage === "prologue" && <Prologue onEnter={() => setStage("story")} />}
 
       {stage === "story" && (
-        <div className="diary-memories">
+        <div className="diary-memories pt-28">
           <HeartTap />
           <div className="relative z-10">
             <LoveTimer />
