@@ -10,7 +10,7 @@ const W = 400;
 const H = 480;
 
 function ScratchCard({ index, onOpen }: { index: number; onOpen: () => void }) {
-  const memory = scratchMemories[index]!;
+  const memory = scratchMemories[index];
   const canvas = useRef<HTMLCanvasElement>(null);
   const last = useRef<{ x: number; y: number } | null>(null);
   const checked = useRef(0);
@@ -62,6 +62,7 @@ function ScratchCard({ index, onOpen }: { index: number; onOpen: () => void }) {
     return { x: (e.clientX - r.left) / r.width * W, y: (e.clientY - r.top) / r.height * H };
   };
 
+  if (!memory) return null;
   return (
     <div ref={ref as React.Ref<HTMLDivElement>} className={`scratch-memory reveal ${shown ? 'reveal-in' : ''}`} style={{ transitionDelay: `${index * 90}ms` }}>
       <span className="scratch-memory-badge">Memory {memory.numeral} · Hidden Keepsake</span>
@@ -87,7 +88,7 @@ function ScratchCard({ index, onOpen }: { index: number; onOpen: () => void }) {
 
 export function ScratchGallery() {
   const [active, setActive] = useState<number | null>(null);
-  const memory = active === null ? null : scratchMemories[active]!;
+  const memory = active === null ? null : scratchMemories[active];
   return (
     <section className="relative px-5 py-24">
       <SectionTitle kicker="Memory Gallery" title="Scratch to Reveal Our Memories" />

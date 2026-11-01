@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Fix saved-song playback on diary opening and respect manual pause; verified saved library after refresh and uninterrupted playback through all chapters.
+- [x] Verify expanded journey, scratch cards, mirror, jar, cassette, coupons, capsule, compass, constellation, secret and QR download; no browser errors or mobile/desktop overflow, 19 tests pass. Fix countdown/header overlap and guard invalid gallery indices.
+
 - [x] Polish header, centered crest, cancellable cake gesture, centered dynamic ruby pulse and red destiny highlight; verified existing forward-facing two-hand avatar pose without replacing its model.
 - [x] Stabilize reasons and answer/footer (measured zero footer displacement); verified three-depth 35-particle viewport heart shower.
 - [x] Add scratch note, WhatsApp coupons, date-locked capsule, memory compass and triple-S secret across cover/passcode/memories.

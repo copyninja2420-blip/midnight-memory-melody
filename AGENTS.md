@@ -15,6 +15,7 @@
 - Load the curved Three.js page-turn overlay dynamically in the browser and keep it outside chapter content; this preserves SSR safety and continuous audio.
 - Keep the bundled playlist empty and play only songs the user adds to the device-local library; the user wants only their own tracks.
 - Store the single audio element on a browser-global symbol; this keeps code splitting and hot reload from creating multiple independent music players.
+- Keep music-opening intent beside the shared audio element and honor it when saved tracks finish loading; this preserves the opening gesture without overriding manual pause.
 - Keep the classic FLAMES calculator separate from the romantic destiny calculator; this preserves classic behavior while allowing the requested celebratory outcome.
 - Use a locally hosted CC0 skinned humanoid for the birthday avatar and animate its bones; this avoids primitive stand-ins and third-party runtime dependencies.
 - Open on a closed velvet cover stage before the passcode page, kept outside the chapter ribbons; it is a prelude, not a chapter.

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { journal } from "@/content/loveStory";
 import { Button } from "@/components/ui/button";
 import { playPageTurn } from "@/lib/storySounds";
+import { startMusicFromGesture } from "@/lib/musicUnlock";
 import leather from "@/assets/wine-leather.jpg";
 
 /** Closed velvet diary cover — the seal swings the cover open to reveal the passcode page. */
@@ -13,12 +14,14 @@ export function ClosedCover({ onOpen }: { onOpen: () => void }) {
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); if (crestTimer.current) clearTimeout(crestTimer.current); }, []);
   const open = () => {
     if (opening) return;
+    startMusicFromGesture();
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     setOpening(true);
     playPageTurn();
     timer.current = setTimeout(onOpen, reduced ? 0 : 1250);
   };
   const tapCrest = () => {
+    startMusicFromGesture();
     window.dispatchEvent(new Event('journal-crest-tap'));
     crestTaps.current++;
     if (crestTimer.current) clearTimeout(crestTimer.current);

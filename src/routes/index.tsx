@@ -80,6 +80,8 @@ function LoveStoryPage() {
   const setStage = useCallback((next: Stage) => {
     if (turnLock.current || next === stage) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
     turnLock.current = true;
     playPageTurn();
     const i = CHAPTERS.findIndex((c) => c.stage === next);
@@ -91,10 +93,10 @@ function LoveStoryPage() {
   const toNames = useCallback(() => setStage("names"), [setStage]);
   useEffect(() => {
     preloadStorySounds();
-    void import("@/components/love/PageCurl");
-    void import("@/components/love/CrystalHeart").then(module => module.preloadCrystalHeart());
-    void import("@/components/love/avatar/HumanoidScene");
-    void import("@/components/love/companion/CompanionScene");
+    void import("@/components/love/PageCurl").catch(() => {});
+    void import("@/components/love/CrystalHeart").then(module => module.preloadCrystalHeart()).catch(() => {});
+    void import("@/components/love/avatar/HumanoidScene").catch(() => {});
+    void import("@/components/love/companion/CompanionScene").catch(() => {});
     return () => timers.current.forEach(clearTimeout);
   }, []);
   useEffect(() => {
@@ -135,7 +137,7 @@ function LoveStoryPage() {
       {stage === "prologue" && <Prologue onEnter={() => setStage("story")} />}
 
       {stage === "story" && (
-        <div className="diary-memories">
+        <div className="diary-memories pt-28">
           <HeartTap />
           <div className="relative z-10">
             <LoveTimer />
