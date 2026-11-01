@@ -9,7 +9,7 @@ import {
   removeStoredTrack,
   type StoredTrack,
 } from "@/lib/musicLibrary";
-import { getSharedAudio } from "@/lib/musicUnlock";
+import { cancelMusicRequest, getSharedAudio, musicRequested, startMusicFromGesture } from "@/lib/musicUnlock";
 
 type UserTrack = Track & { id: string };
 
@@ -74,28 +74,26 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
   const track = playlist[Math.min(index, playlist.length - 1)];
 
   useEffect(() => {
-    if (!ready || !autoplay || !audioRef.current) return;
-    if (!audioRef.current.paused) return;
-    audioRef.current
-      .play()
-      .then(() => setPlaying(true))
-      .catch(() => setPlaying(false));
-  }, [autoplay, ready]);
-
-  useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume;
   }, [volume]);
 
   useEffect(() => {
     const el = audioRef.current;
-    if (!el || !track) return;
+    if (!el) return;
+    if (!track) {
+      el.pause();
+      el.removeAttribute("src");
+      el.load();
+      autoNextRef.current = false;
+      return;
+    }
     if (el.src === new URL(track.src, window.location.href).href) return;
-    const wasPlaying = !el.paused || autoNextRef.current;
+    const wasPlaying = !el.paused || autoNextRef.current || (autoplay && musicRequested());
     autoNextRef.current = false;
     el.src = track.src;
     el.load();
     if (wasPlaying) el.play().catch(() => setPlaying(false));
-  }, [ready, index, track?.src]);
+  }, [autoplay, ready, index, track?.src]);
 
   const advance = () => setIndex((i) => (playlist.length ? (i + 1) % playlist.length : 0));
   advanceRef.current = advance;
@@ -105,13 +103,12 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
     if (!el) return;
     if (!track) { fileRef.current?.click(); return; }
     if (playing) {
+      cancelMusicRequest();
       el.pause();
       setPlaying(false);
     } else {
       el.volume = volume;
-      el.play()
-        .then(() => setPlaying(true))
-        .catch(() => setPlaying(false));
+      startMusicFromGesture();
     }
   };
 
@@ -144,6 +141,7 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
   };
 
   const remove = async (id: string) => {
+    try {
     await removeStoredTrack(id);
     const removed = userTracks.find((t) => t.id === id);
     if (removed) { URL.revokeObjectURL(removed.src); objectUrls.current.delete(removed.src); }
@@ -152,6 +150,8 @@ export function MusicToggle({ autoplay }: { autoplay: boolean }) {
       setIndex(0);
       return list;
     });
+    setUploadError("");
+    } catch { setUploadError("This song couldn’t be removed. Please try again."); }
   };
 
   return (
